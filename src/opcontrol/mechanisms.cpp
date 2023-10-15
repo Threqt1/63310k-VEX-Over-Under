@@ -22,6 +22,12 @@ void MechanismsLoop(void *_)
             lift.moveVoltage(0);
         }
 
+        if (controller.getDigital(ControllerDigital::R2)) {
+              piston.set_value(true);
+        } else if (controller.getDigital(ControllerDigital::R1)) {
+            piston.set_value(false);
+        }
+
         pros::delay(20);
     }
 }
