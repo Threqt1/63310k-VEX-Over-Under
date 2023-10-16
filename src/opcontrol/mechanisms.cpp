@@ -9,12 +9,12 @@ void MechanismsLoop(void *_)
         if (controller.getDigital(ControllerDigital::L1))
         {
             liftStopped = false;
-            lift.moveVoltage(10000);
+            lift.moveVoltage(7500);
         }
         else if (controller.getDigital(ControllerDigital::L2))
         {
             liftStopped = false;
-            lift.moveVoltage(-10000);
+            lift.moveVoltage(-7500);
         }
         else if (!liftStopped)
         {

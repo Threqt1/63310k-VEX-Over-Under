@@ -31,6 +31,10 @@ MotorGroup lift(
  */
 void initialize()
 {
+	pros::lcd::initialize();
+
+	inertial.reset(true);
+    inertial.set_heading(0);
 }
 
 /**
@@ -63,9 +67,24 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	moveForwardFor(12_in, &state);
 
-	
+	MutexOdometryState state{};
+    state.state = {
+        0_deg,
+        0_in,
+        0_in};
+
+    // Initialize a new odometry task
+    pros::Task odometryTask(OdometryLoop, (void *)&state, TASK_PRIORITY_DEFAULT + 1, TASK_STACK_DEPTH_DEFAULT, "Odometry");
+
+    // Wait some time for the task to initialize
+    pros::delay(100);
+
+	moveForwardFor(6_in, &state);
+
+    // Close the task after all autonomous functions are run
+    odometryTask.remove();
+
 }
 
 /**

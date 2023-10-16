@@ -41,9 +41,9 @@ void resetOdometryState(MutexOdometryState *state)
 double MAX_FORWARD_SPEED = 12000;
 void moveForwardFor(QLength length, MutexOdometryState *state)
 {
-    double kP = .00004; // 0.0001;  .00005
-    double kI = 0.0000005;      // 0.0000005;
-    double kD = 0;      // 0.00001;
+    double kP = 0;
+    double kI = 0;
+    double kD = 0;
 
     OdometryState currentState = pollOdometryState(state);
     double forwardAmount = length.convert(inch);

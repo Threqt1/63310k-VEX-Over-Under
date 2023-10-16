@@ -48,10 +48,10 @@ void OdometryLoop(void *istate)
     while (true)
     {
         // The current value of the left encoder
-        double L1 = leftEncoder.get_value();
+        double L1 = leftEncoder.controllerGet();
 
         // The current value of the back encoder
-        double B1 = backEncoder.get_value();
+        // double B1 = backEncoder.get_value();
 
         // The current angle (from the inertial sensor),
         // convert it to radians
@@ -63,7 +63,7 @@ void OdometryLoop(void *istate)
 
         // The change in the back encoder's value since last reset,
         // convert the encoder tick values to distance (inches)
-        double deltaB = (B1 - B0) / ticksPerInch;
+        // double deltaB = (B1 - B0) / ticksPerInch;
 
         // The change in angle (radians)
         double deltaTheta = theta1 - theta0;
@@ -85,7 +85,7 @@ void OdometryLoop(void *istate)
         if (std::abs(deltaTheta) < IMU_ANGLE_THRESHOLD)
         {
             localY = deltaL;
-            localX = deltaB;
+            // localX = deltaB;
         }
         else
         {
@@ -96,7 +96,7 @@ void OdometryLoop(void *istate)
             // Apply the rotation to the tracking wheel distances to
             // find the local X and Y displacements
             localY = rotation * (deltaL / deltaTheta - sL);
-            localX = rotation * (deltaB / deltaTheta + sB);
+            // localX = rotation * (deltaB / deltaTheta + sB);
         }
 
         // The local coordinate system is rotated by theta/2 from the
@@ -163,7 +163,7 @@ void OdometryLoop(void *istate)
 
         // Update the last tick values
         L0 = L1;
-        B0 = B1;
+        // B0 = B1;
         theta0 = theta1;
 
         pros::delay(10);
