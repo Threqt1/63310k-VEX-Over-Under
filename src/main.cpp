@@ -6,22 +6,14 @@
 Controller controller(ControllerId::master);
 std::shared_ptr<ChassisController> chassis =
 	ChassisControllerBuilder()
-		.withMotors({-2, -4},
-					{1, 3})
+		.withMotors({1, 2}, {3, 4})
 		.withDimensions(AbstractMotor::gearset::green, {{4_in, 13_in}, imev5GreenTPR})
 		.build();
 std::shared_ptr<SkidSteerModel> drivetrain = std::dynamic_pointer_cast<SkidSteerModel>(chassis->getModel());
 MotorGroup lift(
 	{Motor(5, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-	 Motor(8, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-	 Motor(20, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
-
-  	pros::ADIDigitalOut piston ('A');
-	pros::Imu inertial(6);
-	okapi::IntegratedEncoder leftEncoder(2, true);
-	okapi::IntegratedEncoder rightEncoder(1);
-
-	 
+	 Motor(6, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+	 Motor(7, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -31,10 +23,6 @@ MotorGroup lift(
  */
 void initialize()
 {
-	pros::lcd::initialize();
-
-	inertial.reset(true);
-    inertial.set_heading(0);
 }
 
 /**
@@ -66,26 +54,7 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-
-	MutexOdometryState state{};
-    state.state = {
-        0_deg,
-        0_in,
-        0_in};
-
-    // Initialize a new odometry task
-    pros::Task odometryTask(OdometryLoop, (void *)&state, TASK_PRIORITY_DEFAULT + 1, TASK_STACK_DEPTH_DEFAULT, "Odometry");
-
-    // Wait some time for the task to initialize
-    pros::delay(100);
-
-	moveForwardFor(6_in, &state);
-
-    // Close the task after all autonomous functions are run
-    odometryTask.remove();
-
-}
+void autonomous() {}
 
 /**
  * Runs the operator control code. This function will be started in its own task
