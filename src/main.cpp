@@ -4,16 +4,26 @@
  * Global Device Initialization
  */
 Controller controller(ControllerId::master);
-std::shared_ptr<ChassisController> chassis =
+std::shared_ptr<OdomChassisController> chassis =
 	ChassisControllerBuilder()
-		.withMotors({1, 2}, {3, 4})
+		.withMotors({-2, -4}, {1, 3})
+		.withGains(
+			{0.0005, 0, 0},		// Distance controller gains
+			{0.001, 0, 0.0001}, // Turn controller gains
+			{0, 0, 0}			// Angle controller gains (helps drive straight)
+			)
 		.withDimensions(AbstractMotor::gearset::green, {{4_in, 13_in}, imev5GreenTPR})
-		.build();
-std::shared_ptr<SkidSteerModel> drivetrain = std::dynamic_pointer_cast<SkidSteerModel>(chassis->getModel());
+		.withOdometry()
+		.buildOdometry();
+std::shared_ptr<SkidSteerModel>
+	drivetrain = std::dynamic_pointer_cast<SkidSteerModel>(chassis->getModel());
 MotorGroup lift(
 	{Motor(5, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-	 Motor(6, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-	 Motor(7, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+	 Motor(8, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
+	 Motor(20, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+pros::ADIDigitalOut piston('A');
+IntegratedEncoder leftEncoder(2, true);
+IntegratedEncoder rightEncoder(1);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -54,7 +64,11 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous()
+{
+	chassis->setState({0_in, 0_in, 0_deg});
+	chassis->driveToPoint({5_ft, 0_ft});
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
