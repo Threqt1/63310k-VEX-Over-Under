@@ -9,6 +9,7 @@ extern Controller controller;
 extern std::shared_ptr<OdomChassisController> chassis;
 extern std::shared_ptr<SkidSteerModel> drivetrain;
 extern MotorGroup lift;
+extern Motor arm;
 extern pros::ADIDigitalOut piston;
 extern IntegratedEncoder leftEncoder;
 extern IntegratedEncoder rightEncoder;

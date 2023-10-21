@@ -21,6 +21,7 @@ MotorGroup lift(
 	{Motor(5, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 	 Motor(8, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 	 Motor(20, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+Motor arm(10, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 pros::ADIDigitalOut piston('A');
 IntegratedEncoder leftEncoder(2, true);
 IntegratedEncoder rightEncoder(1);
@@ -67,15 +68,20 @@ void competition_initialize() {}
 void autonomous()
 {
 	chassis->setState({0_in, 0_in, 0_deg});
-	chassis->driveToPoint({20_in, 0_in});
-	chassis->driveToPoint({20_in, -21_in});
-	chassis->turnToAngle(80_deg);
-	lift.moveVelocity(70);
-	pros::delay(30 * 1000);
-	lift.moveVelocity(0);
-	drivetrain->driveVectorVoltage(12000, 0);
-	pros::delay(4000);
-	piston.set_value(true);
+	chassis->driveToPoint({10_in, -10_in});
+	chassis->driveToPoint({5_in, 0_in});
+	chassis->driveToPoint({-5_in, 0_in});
+	chassis->driveToPoint({0_in, 40_in});
+
+	// chassis->driveToPoint({20_in, 0_in});
+	// chassis->driveToPoint({20_in, -21_in});
+	// chassis->turnToAngle(80_deg);
+	// lift.moveVelocity(70);
+	// pros::delay(30 * 1000);
+	// lift.moveVelocity(0);
+	// drivetrain->driveVectorVoltage(12000, 0);
+	// pros::delay(4000);
+	// piston.set_value(true);
 }
 
 /**

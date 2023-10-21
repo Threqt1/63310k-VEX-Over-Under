@@ -23,13 +23,26 @@ void MechanismsLoop(void *_)
             liftDirection = 0;
         }
 
-        if (controller.getDigital(ControllerDigital::R2))
+        if (controller.getDigital(ControllerDigital::A))
         {
             piston.set_value(true);
         }
-        else if (controller.getDigital(ControllerDigital::R1))
+        else if (controller.getDigital(ControllerDigital::B))
         {
             piston.set_value(false);
+        }
+
+        if (controller.getDigital(ControllerDigital::R1))
+        {
+            arm.moveVoltage(9000);
+        }
+        else if (controller.getDigital(ControllerDigital::R2))
+        {
+            arm.moveVoltage(-9000);
+        }
+        else
+        {
+            arm.moveVoltage(0);
         }
 
         pros::delay(20);
