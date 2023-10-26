@@ -22,6 +22,7 @@ MotorGroup hang(
 	{Motor(7, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
 	 Motor(8, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
 Motor catapult(6, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+Motor hold(9, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
 pros::ADIDigitalOut piston('A');
 // MotorGroup lift(
 // 	{Motor(5, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
@@ -41,6 +42,7 @@ void initialize()
 	catapult.setBrakeMode(AbstractMotor::brakeMode::hold);
 	hang.setBrakeMode(AbstractMotor::brakeMode::hold);
 	intake.setBrakeMode(AbstractMotor::brakeMode::coast);
+	hold.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
 
 /**

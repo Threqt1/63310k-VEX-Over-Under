@@ -5,6 +5,7 @@ void MechanismsLoop(void *_)
     int catapultDirection = 0;
     int intakeDirection = 0;
     int hangDirection = 0;
+    int holdDirection = 0;
 
     while (true)
     {
@@ -14,8 +15,7 @@ void MechanismsLoop(void *_)
         }
         else
         {
-            if (!catapult.isStopped())
-                catapult.moveVelocity(0);
+            catapult.moveVelocity(0);
         }
 
         if (intakeDirection != 0)
@@ -24,8 +24,7 @@ void MechanismsLoop(void *_)
         }
         else
         {
-            if (!intake.isStopped())
-                intake.moveVelocity(0);
+            intake.moveVelocity(0);
         }
 
         if (hangDirection != 0)
@@ -34,8 +33,16 @@ void MechanismsLoop(void *_)
         }
         else
         {
-            if (!hang.isStopped())
-                hang.moveVelocity(0);
+            hang.moveVelocity(0);
+        }
+
+        if (holdDirection != 0)
+        {
+            hold.moveVelocity(100 * holdDirection);
+        }
+        else
+        {
+            hold.moveVelocity(0);
         }
 
         if (controller.getDigital(ControllerDigital::L1))
@@ -84,6 +91,19 @@ void MechanismsLoop(void *_)
         else
         {
             catapultDirection = 0;
+        }
+
+        if (controller.getDigital(ControllerDigital::up))
+        {
+            holdDirection = 1;
+        }
+        else if (controller.getDigital(ControllerDigital::down))
+        {
+            holdDirection = -1;
+        }
+        else
+        {
+            holdDirection = 0;
         }
 
         pros::delay(20);
