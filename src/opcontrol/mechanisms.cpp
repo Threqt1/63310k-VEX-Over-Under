@@ -38,7 +38,7 @@ void MechanismsLoop(void *_)
 
         if (holdDirection != 0)
         {
-            hold.moveVelocity(100 * holdDirection);
+            hold.moveVelocity(20 * holdDirection);
         }
         else
         {

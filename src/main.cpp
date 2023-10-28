@@ -79,18 +79,16 @@ void autonomous()
 	chassis->setState({0_in, 0_in, 0_deg});
 
 	intake.moveVelocity(-600);
-	chassis->driveToPoint({-9_in, 0_in}, true);
-	chassis->driveToPoint({9_in, 0_in});
+	chassis->driveToPoint({-10_in, 0_in}, true);
+	chassis->driveToPoint({0_in, 0_in});
 	pros::delay(500);
 	chassis->driveToPoint({13_in, 0_in});
 	chassis->driveToPoint({-10_in, 0_in}, true);
 	chassis->turnToAngle(-140_deg);
 	intake.moveVelocity(600);
-	pros::delay(300);
-	chassis->turnToAngle(0_deg);
-	chassis->moveDistance(6_in);
-	chassis->turnToAngle(45_deg);
-	chassis->moveDistance(-2_ft);
+	pros::delay(600);
+	chassis->turnToAngle(10_deg);
+	chassis->moveDistance(-20_ft);
 }
 
 /**
@@ -108,6 +106,7 @@ void autonomous()
  */
 void opcontrol()
 {
+	chassis->stop();
 	pros::Task drivetrainTask(DrivetrainLoop, (void *)"", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "drivetrain");
 
 	pros::Task mechanismsTask(MechanismsLoop, (void *)"", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "mechanisms");
