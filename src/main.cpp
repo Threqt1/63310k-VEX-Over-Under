@@ -8,8 +8,8 @@ std::shared_ptr<OdomChassisController> chassis =
 	ChassisControllerBuilder()
 		.withMotors({-2, -4}, {1, 3})
 		.withGains(
-			{0.0005, 0.00001, 0}, // Distance controller gains
-			{0.0008, 0, 0},		  // Turn controller gains
+			{0.001, 0, 0}, // Distance controller gains
+			{0.0009, 0, 0},		  // Turn controller gains
 			{0, 0, 0}			  // Angle controller gains (helps drive straight)
 			)
 		.withDimensions(AbstractMotor::gearset::green, {{4_in, 13_in}, imev5GreenTPR})
@@ -76,6 +76,26 @@ void competition_initialize() {}
  */
 void autonomous()
 {
+	chassis->setState({0_in, 0_in, 0_deg});
+	
+	// pros::delay(100);
+	// drivetrain->driveVectorVoltage(0, 0);
+	// piston.set_value(true);
+	// pros::delay(500);
+	// piston.set_value(false);
+	// chassis->turnToAngle(90_deg);
+	intake.moveVelocity(-600);
+	chassis->driveToPoint({-9_in, 0_in}, true);
+	chassis->driveToPoint({12_in, 0_in});
+	chassis->driveToPoint({-19_in, -2_in}, true);
+	intake.moveVelocity(600);
+	chassis->driveToPoint({-30_in, -20_in}, false);
+	intake.moveVelocity(-600);
+	chassis->driveToPoint({3_in, -20_in}, false);
+
+	
+	
+
 }
 
 /**
