@@ -84,15 +84,15 @@ void autonomous()
 	pros::delay(500);
 	chassis->driveToPoint({13_in, 0_in});
 	chassis->driveToPoint({-10_in, 0_in}, true);
-	chassis->turnToAngle(-140_deg);
+	chassis->turnToAngle(-180_deg);
 	intake.moveVelocity(600);
 	pros::delay(600);
-	chassis->turnToAngle(10_deg);
+	chassis->turnToAngle(45_deg);
 	chassis->moveDistance(-20_ft);
 }
 
 /**
- * Runs the operator control code. This function will be started in its own taskq
+ * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
