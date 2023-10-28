@@ -92,7 +92,7 @@ void autonomous()
 }
 
 /**
- * Runs the operator control code. This function will be started in its own task
+ * Runs the operator control code. This function will be started in its own taskq
  * with the default priority and stack size whenever the robot is enabled via
  * the Field Management System or the VEX Competition Switch in the operator
  * control mode.
