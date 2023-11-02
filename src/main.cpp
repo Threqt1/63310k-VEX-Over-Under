@@ -8,9 +8,9 @@ std::shared_ptr<OdomChassisController> chassis =
 	ChassisControllerBuilder()
 		.withMotors({-2, -4}, {1, 3})
 		.withGains(
-			{0.001, 0, 0},	// Distance controller gains
-			{0.0009, 0, 0}, // Turn controller gains
-			{0, 0, 0}		// Angle controller gains (helps drive straight)
+			{0.001, 0, 0},		// Distance controller gains
+			{0.004, 0.00, 0.0}, // Turn controller gains
+			{0, 0, 0}			// Angle controller gains (helps drive straight)
 			)
 		.withDimensions(AbstractMotor::gearset::green, {{4_in, 8_in}, imev5GreenTPR})
 		.withOdometry()
@@ -27,7 +27,7 @@ pros::ADIDigitalOut piston('A');
 // MotorGroup lift(
 // 	{Motor(5, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 // 	 Motor(8, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
-// 	 Motor(20, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees)});
+// 	 Motor(20, false, AbstractMotor::gearset::green,		 AbstractMotor::encoderUnits::degrees)});
 // Motor arm(10, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 // pros::ADIDigitalOut piston('A');
 
@@ -43,6 +43,9 @@ void initialize()
 	hang.setBrakeMode(AbstractMotor::brakeMode::hold);
 	intake.setBrakeMode(AbstractMotor::brakeMode::coast);
 	hold.setBrakeMode(AbstractMotor::brakeMode::hold);
+
+	chassis->setMoveThreshold(0.5_in);
+	chassis->setTurnThreshold(1_deg);
 }
 
 /**
@@ -84,10 +87,10 @@ void autonomous()
 	pros::delay(500);
 	chassis->driveToPoint({13_in, 0_in});
 	chassis->driveToPoint({-10_in, 0_in}, true);
-	chassis->turnToAngle(-180_deg);
+	chassis->turnToAngle(-140_deg);
 	intake.moveVelocity(600);
 	pros::delay(600);
-	chassis->turnToAngle(45_deg);
+	chassis->turnToAngle(10_deg);
 	chassis->moveDistance(-20_ft);
 }
 
