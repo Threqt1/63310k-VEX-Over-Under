@@ -82,16 +82,32 @@ void autonomous()
 	chassis->setState({0_in, 0_in, 0_deg});
 
 	intake.moveVelocity(-600);
-	chassis->driveToPoint({-10_in, 0_in}, true);
-	chassis->driveToPoint({0_in, 0_in});
-	pros::delay(500);
-	chassis->driveToPoint({13_in, 0_in});
-	chassis->driveToPoint({-10_in, 0_in}, true);
-	chassis->turnToAngle(-140_deg);
+	chassis->setMaxVelocity(140);
+	chassis->moveDistance(3_ft);
+	chassis->setMaxVelocity(75);
+	chassis->turnAngle(100_deg);
+	chassis->setMaxVelocity(300);
+	chassis->moveDistance(10_in);
 	intake.moveVelocity(600);
-	pros::delay(600);
-	chassis->turnToAngle(10_deg);
-	chassis->moveDistance(-20_ft);
+	pros::delay(300);
+	intake.moveVelocity(0);
+	chassis->setMaxVelocity(150);
+	chassis->moveDistance(-10_in);
+	chassis->setMaxVelocity(75);
+	chassis->turnAngle(-130_deg);
+	// intake.moveVelocity(-600);
+	// chassis->setMaxVelocity(160);
+	// chassis->moveDistance(2_ft);
+	// chassis->setMaxVelocity(75);
+	// chassis->turnToAngle(-100_deg);
+	// chassis->setMaxVelocity(300);
+	// chassis->moveDistanceAsync(10_in);
+	// pros::delay(100);
+	// chassis->stop();
+	// intake.moveVelocity(600);
+	// chassis->moveDistance(-1_ft);
+	// chassis->turnToAngle(30_deg);
+	// intake.moveVelocity(-600);
 }
 
 /**
