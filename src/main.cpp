@@ -8,9 +8,10 @@ std::shared_ptr<OdomChassisController> chassis =
 	ChassisControllerBuilder()
 		.withMotors({-2, -4}, {1, 3})
 		.withGains(
-			{0.001, 0, 0},		// Distance controller gains
-			{0.004, 0.00, 0.0}, // Turn controller gains
-			{0, 0, 0}			// Angle controller gains (helps drive straight)
+			{0.001, 0, 0}, // Distance controller gains
+			{0.0033, 0, 0.00013},
+			// {0.006, 0.001, 0.0002}, // Turn controller gains
+			{0, 0, 0} // Angle controller gains (helps drive straight)
 			)
 		.withDimensions(AbstractMotor::gearset::green, {{4_in, 8_in}, imev5GreenTPR})
 		.withOdometry()
@@ -21,9 +22,9 @@ Motor intake(10, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnit
 MotorGroup hang(
 	{Motor(7, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees),
 	 Motor(8, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
-Motor catapult(6, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
-Motor hold(9, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
-pros::ADIDigitalOut piston('A');
+MotorGroup catapult({Motor(6, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees), Motor(9, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees)});
+pros::ADIDigitalOut pistonA('A');
+pros::ADIDigitalOut pistonB('H');
 // MotorGroup lift(
 // 	{Motor(5, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
 // 	 Motor(8, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees),
@@ -42,10 +43,6 @@ void initialize()
 	catapult.setBrakeMode(AbstractMotor::brakeMode::hold);
 	hang.setBrakeMode(AbstractMotor::brakeMode::hold);
 	intake.setBrakeMode(AbstractMotor::brakeMode::coast);
-	hold.setBrakeMode(AbstractMotor::brakeMode::hold);
-
-	chassis->setMoveThreshold(0.5_in);
-	chassis->setTurnThreshold(1_deg);
 }
 
 /**
@@ -77,81 +74,43 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+
+// 218_deg is 180
 void autonomous()
 {
 	chassis->setState({0_in, 0_in, 0_deg});
 
-	intake.moveVelocity(-600);
-	drivetrain->driveVectorVoltage(-4000, 0);
-	pros::delay(500);
-	drivetrain->stop();
-	chassis->setMaxVelocity(140);
-	chassis->moveDistance(3.9_ft);
-	chassis->setMaxVelocity(75);
-	chassis->turnAngle(100_deg);
-	drivetrain->driveVectorVoltage(1000, 0);
-	pros::delay(1000);
-	drivetrain->stop();
-	intake.moveVelocity(600);
-	pros::delay(100);
-	intake.moveVelocity(0);
-	chassis->setMaxVelocity(140);
-	chassis->moveDistance(-6_in);
-	intake.moveVelocity(-600);
-	chassis->setMaxVelocity(75);
-	chassis->turnAngle(-235_deg);
-	chassis->setMaxVelocity(140);
-	chassis->moveDistance(1.8_ft);
-	chassis->setMaxVelocity(75);
-	chassis->turnAngle(195_deg);
-	intake.moveVelocity(0);
-	piston.set_value(true);
-	chassis->setMaxVelocity(75);
-	chassis->turnAngle(15_deg);
-	drivetrain->driveVectorVoltage(10000, 0);
+	chassis->turnAngle(218_deg);
+	drivetrain->driveVectorVoltage(12000, 0);
 
-	// chassis->setMaxVelocity(140);
-	// chassis->moveDistance(2_ft);
-	// chassis->setMaxVelocity(75);
-	// chassis->turnAngle(110_deg);
-	// piston.set_value(true);
-	// drivetrain->driveVectorVoltage(10000, 0);
 	// intake.moveVelocity(-600);
-	// drivetrain->driveVectorVoltage(-12000, 0);
-	// pros::delay(800);
-	// drivetrain->stop();
-	// chassis->setMaxVelocity(150);
-	// chassis->moveDistance(3.5_ft);
-	// chassis->setMaxVelocity(75);
-	// chassis->turnAngle(100_deg);
-	// chassis->setMaxVelocity(300);
-	// drivetrain->driveVectorVoltage(5000, 0);
+	// drivetrain->driveVectorVoltage(-4000, 0);
 	// pros::delay(500);
-	// intake.moveVelocity(600);
-	// pros::delay(300);
-	// intake.moveVelocity(0);
 	// drivetrain->stop();
-	// chassis->setMaxVelocity(150);
-	// chassis->moveDistance(-10_in);
+	// chassis->setMaxVelocity(140);
+	// chassis->moveDistance(3.9_ft);
 	// chassis->setMaxVelocity(75);
-	// chassis->turnAngle(180_deg);
-	// intake.moveVelocity(-600);
-	// chassis->moveDistance(3.5_ft);
 	// chassis->turnAngle(100_deg);
-
-	// intake.moveVelocity(-600);
-	// chassis->setMaxVelocity(160);
-	// chassis->moveDistance(2_ft);
-	// chassis->setMaxVelocity(75);
-	// chassis->turnToAngle(-100_deg);
-	// chassis->setMaxVelocity(300);
-	// chassis->moveDistanceAsync(10_in);
-	// pros::delay(100);
-	// chassis->stop();
+	// drivetrain->driveVectorVoltage(1000, 0);
+	// pros::delay(1000);
+	// drivetrain->stop();
 	// intake.moveVelocity(600);
-	// chassis->moveDistance(-1_ft);
-	// chassis->turnToAngle(30_deg);
+	// pros::delay(100);
+	// intake.moveVelocity(0);
+	// chassis->setMaxVelocity(140);
+	// chassis->moveDistance(-6_in);
 	// intake.moveVelocity(-600);
+	// chassis->setMaxVelocity(75);
+	// chassis->turnAngle(-235_deg);
+	// chassis->setMaxVelocity(140);
+	// chassis->moveDistance(1.8_ft);
+	// chassis->setMaxVelocity(75);
+	// chassis->turnAngle(195_deg);
+	// intake.moveVelocity(0);
+	// piston.set_value(true);
+	// chassis->setMaxVelocity(75);
+	// chassis->turnAngle(15_deg);
+	// drivetrain->driveVectorVoltage(10000, 0);
 }
 
 /**
