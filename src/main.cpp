@@ -1,5 +1,5 @@
 #include "main.h"
-ASSET(path2_txt); 
+ASSET(path1_txt); 
 
 // Controller link
 Controller controller(E_CONTROLLER_MASTER);
@@ -29,7 +29,7 @@ IMU inertial(11);
 
 //Rotation sensor
 pros::Rotation horiSensor(10);
-lemlib::TrackingWheel horizontal(&horiSensor, lemlib::Omniwheel::NEW_275, -13);
+lemlib::TrackingWheel horizontal(&horiSensor, lemlib::Omniwheel::NEW_275, -4);
 
 // Initialize the LemLib drivetrain settings
 lemlib::Drivetrain drivetrain(
@@ -147,8 +147,8 @@ void autonomous()
 
 
 	// chassis.moveToOld(30, 0, 5000);
-	chassis.setPose(-54.566, 33.282, 95);
-	chassis.follow(path2_txt, 23, 4000, true);
+	chassis.setPose(-60.229, -34.871, 90);
+	chassis.follow(path1_txt, 20, 4000, true);
 
 
 
