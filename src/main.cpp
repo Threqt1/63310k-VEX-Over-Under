@@ -1,5 +1,5 @@
 #include "main.h"
-ASSET(path1_txt); 
+ASSET(path1_txt);
 
 // Controller link
 Controller controller(E_CONTROLLER_MASTER);
@@ -27,7 +27,7 @@ MotorGroup rightSideMotors({rightMotor1, rightMotor2, rightMotor3});
 // Inertial sensor
 IMU inertial(11);
 
-//Rotation sensor
+// Rotation sensor
 pros::Rotation horiSensor(10);
 lemlib::TrackingWheel horizontal(&horiSensor, lemlib::Omniwheel::NEW_275, -4);
 
@@ -44,7 +44,9 @@ lemlib::Drivetrain drivetrain(
 // Set up linear movement settings (forward/backward)
 lemlib::ControllerSettings linearMovementSettings(
 	10,	 // P
+	0,	 // I
 	30,	 // D
+	3,	 // antiwindup
 	1,	 // small error (use for tuning settling)
 	100, // small error timeout
 	3,	 // large error (use to quit movement if stuck)
@@ -55,7 +57,9 @@ lemlib::ControllerSettings linearMovementSettings(
 // Set up angular movement settings (turning)
 lemlib::ControllerSettings angularMovementSettings(
 	2,	 // P
+	0,	 // I
 	10,	 // D
+	3,	 // antiwindup
 	1,	 // small error (use for tuning settling)
 	100, // small error timeout
 	3,	 // large error (use to quit movement if stuck)
@@ -65,10 +69,10 @@ lemlib::ControllerSettings angularMovementSettings(
 
 // Set up odometry sensors
 lemlib::OdomSensors odometrySensors(
-	nullptr, // vertical tracking wheel 1
-	nullptr, // vertical tracking wheel 2
+	nullptr,	 // vertical tracking wheel 1
+	nullptr,	 // vertical tracking wheel 2
 	&horizontal, // horizontal tracking wheel 1
-	nullptr, // horizontal tracking wheel 2
+	nullptr,	 // horizontal tracking wheel 2
 	&inertial	 // inertial sensor
 );
 
@@ -145,13 +149,9 @@ void autonomous()
 	// leftSideMotors.brake();
 	// rightSideMotors.brake();
 
-
 	// chassis.moveToOld(30, 0, 5000);
 	chassis.setPose(-60.229, -34.871, 90);
 	chassis.follow(path1_txt, 20, 4000, true);
-
-
-
 }
 
 /**
