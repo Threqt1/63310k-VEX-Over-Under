@@ -1,0 +1,35 @@
+-60, 42, 109.373
+-58.12, 41.318, 107.025
+-56.231, 40.661, 104.625
+-54.333, 40.03, 102.168
+-52.426, 39.428, 99.651
+-50.51, 38.854, 97.069
+-48.585, 38.313, 94.416
+-46.65, 37.805, 91.686
+-44.707, 37.33, 88.873
+-42.757, 36.887, 85.968
+-40.799, 36.479, 82.96
+-38.835, 36.101, 79.84
+-36.867, 35.749, 76.593
+-34.894, 35.418, 73.201
+-32.92, 35.095, 69.645
+-30.948, 34.766, 65.897
+-28.98, 34.409, 61.923
+-27.023, 33.999, 57.676
+-25.085, 33.506, 53.09
+-23.178, 32.904, 51.766
+-21.316, 32.175, 52.774
+-19.512, 31.313, 47.721
+-17.775, 30.323, 42.064
+-16.106, 29.222, 35.518
+-14.5, 28.03, 27.452
+-12.958, 26.757, 15.674
+-12.228, 26.123, 0
+-12.228, 26.123, 0
+2.866, 13.001, 0
+endData
+127
+127
+200
+-60, 42, -32.258, 31.717, -25.762, 38.213, -12.228, 26.123
+#PATH.JERRYIO-DATA {"appVersion":"0.5.1","format":"LemLib v0.4.x (inch, byte-voltage)","gc":{"robotWidth":18,"robotHeight":18,"robotIsHolonomic":false,"showRobot":true,"uol":2.54,"pointDensity":2,"controlMagnetDistance":1.968503937007874,"fieldImage":{"displayName":"VRC 2024 - Over Under","signature":"VRC 2024 - Over Under","origin":{"__type":"built-in"}}},"paths":[{"segments":[{"controls":[{"uid":"iOB8x3UiCj","x":-60,"y":42,"lock":false,"visible":true,"heading":270,"__type":"end-point"},{"uid":"YQUROVJKgm","x":-32.25831342094783,"y":31.716945440063718,"lock":false,"visible":true,"__type":"control"},{"uid":"dJ701LqXUZ","x":-25.76189765033851,"y":38.213361210673035,"lock":false,"visible":true,"__type":"control"},{"uid":"HUwaqMolSc","x":-12.22769812823576,"y":26.12280963759458,"lock":false,"visible":true,"heading":180,"__type":"end-point"}],"speedProfiles":[],"lookaheadKeyframes":[],"uid":"JWZKnapsDu"}],"pc":{"speedLimit":{"minLimit":{"value":0,"label":"0"},"maxLimit":{"value":127,"label":"127"},"step":1,"from":34,"to":127},"bentRateApplicableRange":{"minLimit":{"value":0,"label":"0"},"maxLimit":{"value":4,"label":"4"},"step":0.01,"from":1.4,"to":1.8},"maxDecelerationRate":127},"name":"Path","uid":"zPu4Iq2NVl","lock":false,"visible":true}]}

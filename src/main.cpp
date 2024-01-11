@@ -1,5 +1,4 @@
 #include "main.h"
-ASSET(path1_txt);
 
 // Controller link
 Controller controller(E_CONTROLLER_MASTER);
@@ -29,7 +28,7 @@ IMU inertial(11);
 
 // Rotation sensor
 pros::Rotation horiSensor(10);
-lemlib::TrackingWheel horizontal(&horiSensor, lemlib::Omniwheel::NEW_275, -4);
+lemlib::TrackingWheel horizontal(&horiSensor, lemlib::Omniwheel::NEW_275, 3);
 
 // Initialize the LemLib drivetrain settings
 lemlib::Drivetrain drivetrain(
@@ -38,7 +37,7 @@ lemlib::Drivetrain drivetrain(
 	12.5,						// track width in inches
 	lemlib::Omniwheel::NEW_325, // wheel diameter
 	333,						// rpm
-	2							// chase power (probably for pure pursuit)
+	8							// chase power (probably for pure pursuit)
 );
 
 // Set up linear movement settings (forward/backward)
@@ -71,7 +70,7 @@ lemlib::ControllerSettings angularMovementSettings(
 lemlib::OdomSensors odometrySensors(
 	nullptr,	 // vertical tracking wheel 1
 	nullptr,	 // vertical tracking wheel 2
-	&horizontal, // horizontal tracking wheel 1
+	nullptr,//&horizontal, // horizontal tracking wheel 1
 	nullptr,	 // horizontal tracking wheel 2
 	&inertial	 // inertial sensor
 );
@@ -135,23 +134,46 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+
+ASSET(path47_txt);
+ASSET(path47b_txt);
+ASSET(path52b_txt);
+ASSET(path60c_txt);
+
 void autonomous()
 {
-	// for (int i = 0; i < 5; i++)
-	// {
-	// 	leftSideMotors.move_voltage(12000);
-	// 	rightSideMotors.move_voltage(12000);
-	// 	pros::delay(1000);
-	// 	leftSideMotors.move_voltage(-12000);
-	// 	rightSideMotors.move_voltage(-12000);
-	// 	pros::delay(1000);
-	// }
-	// leftSideMotors.brake();
-	// rightSideMotors.brake();
+	// chassis.setPose(-35.777, -57.699, 0);
+	// chassis.follow(path47_txt, 11, 150000, true);
+	// chassis.turnTo(-36.95, -56.887, 1000);
+	// chassis.follow(path47b_txt, 11, 15000, true);
 
-	// chassis.moveToOld(30, 0, 5000);
-	chassis.setPose(-60.229, -34.871, 90);
-	chassis.follow(path1_txt, 20, 4000, true);
+	catapultIntake.move_voltage(-12000);
+	chassis.setPose(-28, 58, 90);
+	chassis.moveToPoint(-3, 58, 2000);
+	chassis.moveToPoint(-28, 58, 2000, false);
+	chassis.turnTo(-100, 57, 1000, true);
+	chassis.follow(path52b_txt, 11, 150000, true, false);
+	catapultIntake.move_voltage(12000);
+	delay(350);
+	catapultIntake.brake();
+	sideHang.set_value(true);
+	delay(350);
+	chassis.turnTo(-200, 35, 1000, false);
+	delay(900);
+	sideHang.set_value(false);
+	chassis.turnTo(-63, 20, 1000, false);
+	chassis.moveToPoint(-63, 20, 1000, false);
+	chassis.moveToPoint(-63, 45, 1000, true);
+	chassis.turnTo(-40, 45, 1000);
+
+	catapultIntake.move_voltage(-12000);
+	chassis.follow(path60c_txt, 12, 150000, true, false);
+	catapultIntake.move_voltage(12000);
+	delay(400);
+	catapultIntake.brake();
+	wings.set_value(true);
+	chassis.moveToPoint(-50, 14, 1200, true);
+
 }
 
 /**

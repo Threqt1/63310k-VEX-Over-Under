@@ -5,7 +5,7 @@
         "target": "v5",
         "templates": {
             "LemLib": {
-                "location": "/Users/krish/Library/Application Support/PROS/templates/LemLib@0.5.0-rc.5",
+                "location": "/Users/kev/Library/Application Support/PROS/templates/LemLib@0.5.0-rc.5",
                 "metadata": {
                     "origin": "local"
                 },
