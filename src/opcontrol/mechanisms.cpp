@@ -55,7 +55,7 @@ ADIMechanism hangMechanism(&hang, DIGITAL_UP, DIGITAL_DOWN);
 
 bool catapultToggle = false;
 int catapultDirection = 0;
-int catapultMaxVelo = 70;
+int catapultMaxVelo = 100;
 void MechanismsTask(void *_)
 {
     while (true)
