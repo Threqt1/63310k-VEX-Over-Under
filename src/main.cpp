@@ -141,63 +141,95 @@ ASSET(path52b_txt);
 ASSET(path82c_txt);
 ASSET(path63d_txt);
 ASSET(path66e_txt);
+ASSET(path91f_txt);
 
 void autonomous()
 {
-	// chassis.setPose(-35.777, -57.699, 0);
-	// chassis.follow(path47_txt, 11, 150000, true);
-	// chassis.turnTo(-36.95, -56.887, 1000);
-	// chassis.follow(path47b_txt, 11, 15000, true);
-
-
 	//6 ball thats def 5
-	chassis.setPose(-3, 58, 90);
-	chassis.moveToPoint(0, 58, 2000);
-	catapultIntake.move_voltage(12000);
-	delay(250);
-	catapultIntake.move_voltage(-12000);
-	chassis.moveToPoint(-27, 57, 1200, false);
-	chassis.turnTo(-100, 56, 800, true);
-	chassis.follow(path52b_txt, 11, 10000, true, false);
-	catapultIntake.move_voltage(12000);
-	delay(350);
-	catapultIntake.brake();
-	sideHang.set_value(true);
-	delay(200);
-	chassis.turnTo(-200, 65, 1000, false);
-	delay(650);
-	sideHang.set_value(false);
-	chassis.turnTo(-63, 20, 700, false);
-	chassis.moveToPoint(-65, 20, 1000, false);
-	chassis.moveToPoint(-63, 45, 600, true);
-	chassis.turnTo(-40, 45, 800);
+	// chassis.setPose(-3, 58, 90);
+	// chassis.moveToPoint(0, 58, 2000);
+	// catapultIntake.move_voltage(12000);
+	// delay(250);
+	// catapultIntake.move_voltage(-12000);
+	// chassis.moveToPoint(-27, 57, 1200, false);
+	// chassis.turnTo(-100, 56, 800, true);
+	// chassis.follow(path52b_txt, 11, 10000, true, false);
+	// catapultIntake.move_voltage(12000);
+	// delay(350);
+	// catapultIntake.brake();
+	// sideHang.set_value(true);
+	// delay(200);
+	// chassis.turnTo(-200, 65, 1000, false);
+	// delay(650);
+	// sideHang.set_value(false);
+	// chassis.turnTo(-63, 20, 700, false);
+	// chassis.moveToPoint(-65, 20, 1000, false);
+	// chassis.moveToPoint(-63, 45, 600, true);
+	// chassis.turnTo(-40, 45, 800);
 
-	catapultIntake.move_voltage(-12000);
+	// catapultIntake.move_voltage(-12000);
 	
-	chassis.follow(path82c_txt, 11, 1500, true, false);
-	delay(100);
-	chassis.turnTo(-50, 5, 1500, true);
-	delay(500);
-	catapultIntake.move_voltage(12000);
-	delay(350);
-	catapultIntake.move_voltage(-12000);
-	chassis.moveToPoint(1, 2, 1500, true);
-	delay(100);
-	chassis.turnTo(-50, 5, 2000, true);
-	delay(500);
-	wings.set_value(true);
-	chassis.moveToPoint(-50, 0, 1000, true);
-	chassis.moveToPoint(-30, 0, 1000, true);
+	// chassis.follow(path82c_txt, 11, 1500, true, false);
+	// delay(100);
+	// chassis.turnTo(-50, 5, 1500, true);
+	// delay(500);
+	// catapultIntake.move_voltage(12000);
+	// delay(350);
+	// catapultIntake.move_voltage(-12000);
+	// chassis.moveToPoint(1, 2, 1500, true);
+	// delay(100);
+	// chassis.turnTo(-50, 5, 2000, true);
+	// delay(500);
+	// wings.set_value(true);
+	// chassis.moveToPoint(-50, 0, 1000, true);
+	// chassis.moveToPoint(-30, 0, 1000, true);
 
 
 	//skills
-	// chassis.setPose(-35, -62, 90); 
-	// chassis.follow(path63d_txt, 11, 150000, false, false);
-	// chassis.moveToPoint(-55, -50, 1500, true);
-	// chassis.turnTo(-30, -70, 1300, false);
-	// chassis.follow(path66e_txt, 15, 150000, false, false);
-	
-	
+	chassis.setPose(-35, -62, 90); 
+	chassis.follow(path63d_txt, 11, 1200, false, false);
+	chassis.moveToPoint(-61, -28, 500, false);
+	chassis.moveToPoint(-63, -43, 700, true);
+	chassis.turnTo(45, 0, 900, true);
+	chassis.moveToPoint(-67, -45, 1000, false);
+	catapultIntake.move_voltage(12000);
+	// delay(26000);
+
+	chassis.moveToPoint(-55, -50, 1500, true);
+	chassis.turnTo(-30, -70, 1300, false);
+
+	catapultIntake.move_voltage(10000);
+	chassis.follow(path66e_txt, 15, 150000, false, false);
+	catapultIntake.brake();
+
+	chassis.moveToPoint(67, -20, 1000, false, 100);
+	chassis.moveToPoint(64, -40, 1000, true);
+	chassis.moveToPoint(64, -20, 700, false);
+
+	chassis.moveToPoint(35, -36, 1500, true, 80);
+	chassis.moveToPoint(12, -33, 1500, true);
+
+	chassis.moveToPoint(14.5, -17, 1500, false);
+	wings.set_value(true);
+	chassis.moveToPoint(49, -4, 2000, true, 80);
+	wings.set_value(false);
+
+	chassis.moveToPoint(14.5, -17, 1500, false);
+	chassis.moveToPoint(14.5, 17, 1500, false);
+	wings.set_value(true);
+	chassis.moveToPoint(49, 5, 3000, true, 80);
+	wings.set_value(false);
+
+	chassis.moveToPoint(14.5, 17, 1500, false);
+	wings.set_value(true);
+	chassis.moveToPoint(49, 0, 3000, true, 80);
+	wings.set_value(false);
+	chassis.moveToPoint(14.5, 17, 1500, false);
+	chassis.turnTo(25, 25, 1000, false);
+
+	chassis.follow(path91f_txt, 15, 4000, false, false);
+	chassis.moveToPoint(65, 20, 1000, false, 80);
+
 
 }
 
