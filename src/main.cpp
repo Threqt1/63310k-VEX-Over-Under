@@ -141,7 +141,7 @@ ASSET(path52b_txt);
 ASSET(path82c_txt);
 ASSET(path63d_txt);
 ASSET(path66e_txt);
-ASSET(path91f_txt);
+ASSET(path95f_txt);
 
 void autonomous()
 {
@@ -191,15 +191,15 @@ void autonomous()
 	chassis.moveToPoint(-61, -28, 500, false);
 	chassis.moveToPoint(-63, -43, 700, true);
 	chassis.turnTo(45, 0, 900, true);
-	chassis.moveToPoint(-67, -45, 1000, false);
+	chassis.moveToPoint(-72, -53, 1000, false);
 	catapultIntake.move_voltage(12000);
-	// delay(26000);
+	delay(26000);
 
 	chassis.moveToPoint(-55, -50, 1500, true);
 	chassis.turnTo(-30, -70, 1300, false);
 
 	catapultIntake.move_voltage(10000);
-	chassis.follow(path66e_txt, 15, 150000, false, false);
+	chassis.follow(path66e_txt, 15, 6000, false, false);
 	catapultIntake.brake();
 
 	chassis.moveToPoint(67, -20, 1000, false, 100);
@@ -209,25 +209,34 @@ void autonomous()
 	chassis.moveToPoint(35, -36, 1500, true, 80);
 	chassis.moveToPoint(12, -33, 1500, true);
 
-	chassis.moveToPoint(14.5, -17, 1500, false);
+	chassis.moveToPoint(16, -17, 1500, false);
+	chassis.turnTo(49, -4, 1000, true);
+	delay(1000);
 	wings.set_value(true);
-	chassis.moveToPoint(49, -4, 2000, true, 80);
+	chassis.moveToPoint(49, -4, 1500, true, 80);
+	delay(600);
 	wings.set_value(false);
 
-	chassis.moveToPoint(14.5, -17, 1500, false);
-	chassis.moveToPoint(14.5, 17, 1500, false);
+	chassis.moveToPoint(16, -17, 1500, false);
+	chassis.moveToPoint(16, 17, 1500, false);
+	chassis.turnTo(49, -4, 1000, true);
 	wings.set_value(true);
-	chassis.moveToPoint(49, 5, 3000, true, 80);
+	chassis.moveToPoint(49, 5, 1500, true, 80);
+	delay(600);
 	wings.set_value(false);
 
-	chassis.moveToPoint(14.5, 17, 1500, false);
+	chassis.moveToPoint(16, 17, 1500, false);
+	chassis.turnTo(49, -4, 1000, true);
 	wings.set_value(true);
-	chassis.moveToPoint(49, 0, 3000, true, 80);
+	chassis.moveToPoint(49, 0, 1500, true, 80);
+	delay(1000);
 	wings.set_value(false);
-	chassis.moveToPoint(14.5, 17, 1500, false);
+
+
+	chassis.moveToPoint(20, 17, 1500, false);
 	chassis.turnTo(25, 25, 1000, false);
 
-	chassis.follow(path91f_txt, 15, 4000, false, false);
+	chassis.follow(path95f_txt, 15, 4000, false, false);
 	chassis.moveToPoint(65, 20, 1000, false, 80);
 
 
