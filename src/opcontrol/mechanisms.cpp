@@ -49,36 +49,56 @@ void ADIMechanism::poll()
     }
 }
 
-ADIMechanism wingsMechanism(&wings, DIGITAL_L1, DIGITAL_L2);
-ADIMechanism sideHangMechanism(&sideHang, DIGITAL_LEFT, DIGITAL_RIGHT);
+MotorMechanism intakeMechanism(&intake, DIGITAL_R1, DIGITAL_R2);
+ADIMechanism horizontalWingsMechanism(&horizontalWings, DIGITAL_L1, DIGITAL_L2);
+ADIMechanism verticalWingsMechanism(&verticalWings, DIGITAL_L1, DIGITAL_L2);
 ADIMechanism hangMechanism(&hang, DIGITAL_UP, DIGITAL_DOWN);
 
+bool wingsToggle = true;
+
 bool catapultToggle = false;
+
 int catapultDirection = 0;
-int catapultMaxVelo = 100;
+int catapultMaxVoltage = -11000;
 void MechanismsTask(void *_)
 {
     while (true)
     {
-        wingsMechanism.poll();
-        sideHangMechanism.poll();
+        intakeMechanism.poll();
         hangMechanism.poll();
+
+        if (controller.get_digital(DIGITAL_RIGHT))
+        {
+            wingsToggle = !wingsToggle;
+        }
+
+        if (wingsToggle)
+        {
+            horizontalWingsMechanism.poll();
+        }
+        else
+        {
+            verticalWingsMechanism.poll();
+        }
 
         if (controller.get_digital(DIGITAL_A))
         {
             catapultToggle = true;
         }
-        else if (controller.get_digital(DIGITAL_B))
+
+        if (controller.get_digital(DIGITAL_B))
         {
             catapultToggle = false;
         }
 
-        if (controller.get_digital(DIGITAL_R1))
+        if (controller.get_digital(DIGITAL_X))
         {
+            catapultToggle = false;
             catapultDirection = 1;
         }
-        else if (controller.get_digital(DIGITAL_R2))
+        else if (controller.get_digital(DIGITAL_Y))
         {
+            catapultToggle = false;
             catapultDirection = -1;
         }
         else
@@ -88,17 +108,17 @@ void MechanismsTask(void *_)
 
         if (catapultToggle)
         {
-            catapultIntake.move_velocity(catapultMaxVelo);
+            catapult.move_voltage(catapultMaxVoltage);
         }
         else
         {
             if (catapultDirection != 0)
             {
-                catapultIntake.move_velocity(catapultMaxVelo * catapultDirection);
+                catapult.move_voltage(catapultMaxVoltage * catapultDirection);
             }
             else
             {
-                catapultIntake.brake();
+                catapult.brake();
             }
         }
 

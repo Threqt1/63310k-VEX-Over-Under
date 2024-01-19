@@ -8,7 +8,8 @@ extern Controller controller;
 extern lemlib::Chassis chassis;
 extern lemlib::Drivetrain drivetrain;
 
-extern MotorGroup catapultIntake;
-extern ADIDigitalOut wings;
-extern ADIDigitalOut sideHang;
+extern MotorGroup catapult;
+extern Motor intake;
+extern ADIDigitalOut horizontalWings;
+extern ADIDigitalOut verticalWings;
 extern ADIDigitalOut hang;
