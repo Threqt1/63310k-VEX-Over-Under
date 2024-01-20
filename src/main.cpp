@@ -43,7 +43,7 @@ IMU inertial(11);
 lemlib::Drivetrain drivetrain(
 	&leftSideMotors,			// left side motors
 	&rightSideMotors,			// right side motors
-	12.5,						// track width in inches
+	11.5,						// track width in inches
 	lemlib::Omniwheel::NEW_325, // wheel diameter
 	360,						// rpm
 	8							// chase power (probably for pure pursuit)
@@ -51,12 +51,12 @@ lemlib::Drivetrain drivetrain(
 
 // Set up linear movement settings (forward/backward)
 lemlib::ControllerSettings linearMovementSettings(
-	10,	 // P
+	20,	 // P
 	0,	 // I
 	30,	 // D
 	3,	 // antiwindup
 	1,	 // small error (use for tuning settling)
-	100, // small error timeout
+	100, // small error timeout53
 	3,	 // large error (use to quit movement if stuck)
 	500, // large error timeout
 	20	 // maximum acceleration (slew)
@@ -64,10 +64,10 @@ lemlib::ControllerSettings linearMovementSettings(
 
 // Set up angular movement settings (turning)
 lemlib::ControllerSettings angularMovementSettings(
-	2,	 // P
+	20,	 // P
 	0,	 // I
-	10,	 // D
-	3,	 // antiwindup
+	70,	 // D
+	3,	 // antiwindup10000
 	1,	 // small error (use for tuning settling)
 	100, // small error timeout
 	3,	 // large error (use to quit movement if stuck)
@@ -98,6 +98,8 @@ void initialize()
 	pros::lcd::initialize(); // initialize brain screen
 	chassis.calibrate();	 // calibrate sensors
 							 // catapult.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+	leftSideMotors.set_voltage_limit(5000);
+	rightSideMotors.set_voltage_limit(5000);
 
 	// // thread to for brain screen and position logging
 	// pros::Task screenTask([&]()
@@ -118,7 +120,7 @@ void initialize()
 /**
  * Runs while the robot is in the disabled state of Field Management System or
  * the VEX Competition Switch, following either autonomous or opcontrol. When
- * the robot is enabled, this task will exit.
+ * the robot is enabled, this task will exit.51
  */
 void disabled() {}
 

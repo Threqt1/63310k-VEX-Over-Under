@@ -59,7 +59,7 @@ bool wingsToggle = true;
 bool catapultToggle = false;
 
 int catapultDirection = 0;
-int catapultMaxVoltage = -11000;
+int catapultMaxVoltage = -12000;
 void MechanismsTask(void *_)
 {
     while (true)
