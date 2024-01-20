@@ -33,7 +33,7 @@ MotorGroup leftSideMotors({leftMotor1, leftMotor2, leftMotor3});
 MotorGroup rightSideMotors({rightMotor1, rightMotor2, rightMotor3});
 
 // Inertial sensor
-// IMU inertial(11);
+IMU inertial(11);
 
 // Rotation sensor
 // pros::Rotation horiSensor(10);
@@ -45,7 +45,7 @@ lemlib::Drivetrain drivetrain(
 	&rightSideMotors,			// right side motors
 	12.5,						// track width in inches
 	lemlib::Omniwheel::NEW_325, // wheel diameter
-	600,						// rpm
+	360,						// rpm
 	8							// chase power (probably for pure pursuit)
 );
 
@@ -81,7 +81,7 @@ lemlib::OdomSensors odometrySensors(
 	nullptr, // vertical tracking wheel 2
 	nullptr, //&horizontal, // horizontal tracking wheel 1
 	nullptr, // horizontal tracking wheel 2
-	nullptr	 // inertial sensor
+	&inertial	 // inertial sensor
 );
 
 // Configure the lemlib chassis
@@ -145,12 +145,62 @@ void competition_initialize() {}
  * from where it left off.
  */
 
+//for 6
+ASSET(path47_txt);
+ASSET(path47b_txt);
+ASSET(path52b_txt);
+ASSET(path82c_txt);
+
+//for skills
 ASSET(path63d_txt);
 ASSET(path66e_txt);
 ASSET(path95f_txt);
 
 void autonomous()
 {
+	//6 ball thats def 5
+	chassis.setPose(-3, 58, 90);
+	chassis.turnTo(-3, -58, 4000);
+	// chassis.moveToPoint(0, 58, 2000);
+	// intake.move_voltage(12000);
+	// delay(250);
+	// intake.move_voltage(-12000);
+	// chassis.moveToPoint(-27, 57, 1200, false);
+	// chassis.turnTo(-100, 56, 800, true);
+	// chassis.follow(path52b_txt, 11, 10000, true, false);
+	// intake.move_voltage(12000);
+	// delay(350);
+	// intake.brake();
+	// verticalWings.set_value(true);
+	// delay(200);
+	// chassis.turnTo(-200, 65, 1000, false);
+	// delay(650);
+	// verticalWings.set_value(false);
+	// chassis.turnTo(-63, 20, 700, false);
+	// chassis.moveToPoint(-65, 20, 1000, false);
+	// chassis.moveToPoint(-63, 45, 600, true);
+	// chassis.turnTo(-40, 45, 800);
+
+	// intake.move_voltage(-12000);
+	
+	// chassis.follow(path82c_txt, 11, 1500, true, false);
+	// delay(100);
+	// chassis.turnTo(-50, 5, 1500, true);
+	// delay(500);
+	// intake.move_voltage(12000);
+	// delay(350);
+	// intake.move_voltage(-12000);
+	// chassis.moveToPoint(1, 2, 1500, true);
+	// delay(100);
+	// chassis.turnTo(-50, 5, 2000, true);
+	// delay(500);
+	// horizontalWings.set_value(true);
+	// chassis.moveToPoint(-50, 0, 1000, true);
+	// chassis.moveToPoint(-30, 0, 1000, true);
+
+
+
+
 	// skills
 	// chassis.setPose(-35, -62, 90);
 	// chassis.follow(path63d_txt, 11, 1200, false, false);
@@ -178,25 +228,25 @@ void autonomous()
 	// chassis.moveToPoint(16, -17, 1500, false);
 	// chassis.turnTo(49, -4, 1000, true);
 	// delay(1000);
-	// hori.set_value(true);
+	// horizontalWings.set_value(true);
 	// chassis.moveToPoint(49, -4, 1500, true, 80);
 	// delay(600);
-	// wings.set_value(false);
+	// horizontalWings.set_value(false);
 
 	// chassis.moveToPoint(16, -17, 1500, false);
 	// chassis.moveToPoint(16, 17, 1500, false);
 	// chassis.turnTo(49, -4, 1000, true);
-	// wings.set_value(true);
+	// horizontalWings.set_value(true);
 	// chassis.moveToPoint(49, 5, 1500, true, 80);
 	// delay(600);
-	// wings.set_value(false);
+	// horizontalWings.set_value(false);
 
 	// chassis.moveToPoint(16, 17, 1500, false);
 	// chassis.turnTo(49, -4, 1000, true);
-	// wings.set_value(true);
+	// horizontalWings.set_value(true);
 	// chassis.moveToPoint(49, 0, 1500, true, 80);
 	// delay(1000);
-	// wings.set_value(false);
+	// horizontalWings.set_value(false);
 
 	// chassis.moveToPoint(20, 17, 1500, false);
 	// chassis.turnTo(25, 25, 1000, false);
