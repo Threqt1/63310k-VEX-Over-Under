@@ -21,19 +21,19 @@ ADIDigitalOut horizontalWings('B');
 ADIDigitalOut hang('A');
 
 // Drivetrain motors
-Motor leftMotor1(1, E_MOTOR_GEARSET_18);
-Motor leftMotor2(2, E_MOTOR_GEARSET_18);
-Motor leftMotor3(3, E_MOTOR_GEARSET_18);
-Motor rightMotor1(-4, E_MOTOR_GEARSET_18);
-Motor rightMotor2(-5, E_MOTOR_GEARSET_18);
-Motor rightMotor3(-6, E_MOTOR_GEARSET_18);
+Motor leftMotor1(1);
+Motor leftMotor2(2);
+Motor leftMotor3(3);
+Motor rightMotor1(-4);
+Motor rightMotor2(-5);
+Motor rightMotor3(-6);
 
 // Drivetrain motor groups
-MotorGroup leftSideMotors({leftMotor1, leftMotor2, leftMotor3});
-MotorGroup rightSideMotors({rightMotor1, rightMotor2, rightMotor3});
+MotorGroup rightSideMotors({leftMotor1, leftMotor2, leftMotor3});
+MotorGroup leftSideMotors({rightMotor1, rightMotor2, rightMotor3});
 
 // Inertial sensor
-IMU inertial(11);
+IMU inertial(12);
 
 // Rotation sensor
 // pros::Rotation horiSensor(10);
@@ -43,7 +43,7 @@ IMU inertial(11);
 lemlib::Drivetrain drivetrain(
 	&leftSideMotors,			// left side motors
 	&rightSideMotors,			// right side motors
-	11.5,						// track width in inches
+	10.6,						// track width in inches
 	lemlib::Omniwheel::NEW_325, // wheel diameter
 	360,						// rpm
 	8							// chase power (probably for pure pursuit)
@@ -56,7 +56,7 @@ lemlib::ControllerSettings linearMovementSettings(
 	30,	 // D
 	3,	 // antiwindup
 	1,	 // small error (use for tuning settling)
-	100, // small error timeout53
+	60,	 // small error timeout
 	3,	 // large error (use to quit movement if stuck)
 	500, // large error timeout
 	20	 // maximum acceleration (slew)
@@ -64,12 +64,12 @@ lemlib::ControllerSettings linearMovementSettings(
 
 // Set up angular movement settings (turning)
 lemlib::ControllerSettings angularMovementSettings(
-	20,	 // P
+	7,	 // P
 	0,	 // I
-	70,	 // D
-	3,	 // antiwindup10000
-	1,	 // small error (use for tuning settling)
-	100, // small error timeout
+	65,	 // D
+	3,	 // antiwindup
+	2,	 // small error (use for tuning settling)
+	60,	 // small error timeout
 	3,	 // large error (use to quit movement if stuck)
 	500, // large error timeout
 	20	 // maximum acceleration (slew)
@@ -77,11 +77,11 @@ lemlib::ControllerSettings angularMovementSettings(
 
 // Set up odometry sensors
 lemlib::OdomSensors odometrySensors(
-	nullptr, // vertical tracking wheel 1
-	nullptr, // vertical tracking wheel 2
-	nullptr, //&horizontal, // horizontal tracking wheel 1
-	nullptr, // horizontal tracking wheel 2
-	&inertial	 // inertial sensor
+	nullptr,  // vertical tracking wheel 1
+	nullptr,  // vertical tracking wheel 2
+	nullptr,  //&horizontal, // horizontal tracking wheel 1
+	nullptr,  // horizontal tracking wheel 2
+	&inertial // inertial sensor
 );
 
 // Configure the lemlib chassis
@@ -97,24 +97,24 @@ void initialize()
 {
 	pros::lcd::initialize(); // initialize brain screen
 	chassis.calibrate();	 // calibrate sensors
-							 // catapult.set_brake_modes(E_MOTOR_BRAKE_HOLD);
-	leftSideMotors.set_voltage_limit(5000);
-	rightSideMotors.set_voltage_limit(5000);
+							 //  catapult.set_brake_modes(E_MOTOR_BRAKE_HOLD);
+							 // leftSideMotors.set_voltage_limit(5000);
+							 // rightSideMotors.set_voltage_limit(5000);
 
 	// // thread to for brain screen and position logging
-	// pros::Task screenTask([&]()
-	// 					  {
-	//     lemlib::Pose pose(0, 0, 0);
-	//     while (true) {
-	//         // print robot location to the brain screen
-	//         pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-	//         pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-	//         pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
-	//         // log position telemetry
-	//         lemlib::telemetrySink()->info("Chassis pose: {}", chassis.getPose());
-	//         // delay to save resources
-	//         pros::delay(50);
-	//     } });
+	pros::Task screenTask([&]()
+						  {
+	    lemlib::Pose pose(0, 0, 0);
+	    while (true) {
+	        // print robot location to the brain screen
+	        pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
+	        pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
+	        pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
+	        // log position telemetry
+	        lemlib::telemetrySink()->info("Chassis pose: {}", chassis.getPose());
+	        // delay to save resources
+	        pros::delay(50);
+	    } });
 }
 
 /**
@@ -147,114 +147,15 @@ void competition_initialize() {}
  * from where it left off.
  */
 
-//for 6
-ASSET(path47_txt);
-ASSET(path47b_txt);
-ASSET(path52b_txt);
-ASSET(path82c_txt);
-
-//for skills
-ASSET(path63d_txt);
-ASSET(path66e_txt);
-ASSET(path95f_txt);
-
 void autonomous()
 {
-	//6 ball thats def 5
-	chassis.setPose(-3, 58, 90);
-	chassis.turnTo(-3, -58, 4000);
-	// chassis.moveToPoint(0, 58, 2000);
-	// intake.move_voltage(12000);
-	// delay(250);
-	// intake.move_voltage(-12000);
-	// chassis.moveToPoint(-27, 57, 1200, false);
-	// chassis.turnTo(-100, 56, 800, true);
-	// chassis.follow(path52b_txt, 11, 10000, true, false);
-	// intake.move_voltage(12000);
-	// delay(350);
-	// intake.brake();
-	// verticalWings.set_value(true);
-	// delay(200);
-	// chassis.turnTo(-200, 65, 1000, false);
-	// delay(650);
-	// verticalWings.set_value(false);
-	// chassis.turnTo(-63, 20, 700, false);
-	// chassis.moveToPoint(-65, 20, 1000, false);
-	// chassis.moveToPoint(-63, 45, 600, true);
-	// chassis.turnTo(-40, 45, 800);
-
-	// intake.move_voltage(-12000);
-	
-	// chassis.follow(path82c_txt, 11, 1500, true, false);
-	// delay(100);
-	// chassis.turnTo(-50, 5, 1500, true);
-	// delay(500);
-	// intake.move_voltage(12000);
-	// delay(350);
-	// intake.move_voltage(-12000);
-	// chassis.moveToPoint(1, 2, 1500, true);
-	// delay(100);
-	// chassis.turnTo(-50, 5, 2000, true);
-	// delay(500);
-	// horizontalWings.set_value(true);
-	// chassis.moveToPoint(-50, 0, 1000, true);
-	// chassis.moveToPoint(-30, 0, 1000, true);
-
-
-
-
-	// skills
-	// chassis.setPose(-35, -62, 90);
-	// chassis.follow(path63d_txt, 11, 1200, false, false);
-	// chassis.moveToPoint(-61, -28, 500, false);
-	// chassis.moveToPoint(-63, -43, 700, true);
-	// chassis.turnTo(45, 0, 900, true);
-	// chassis.moveToPoint(-72, -53, 1000, false);
-	// catapultIntake.move_voltage(12000);
-	// delay(26000);
-
-	// chassis.moveToPoint(-55, -50, 1500, true);
-	// chassis.turnTo(-30, -70, 1300, false);
-
-	// catapultIntake.move_voltage(10000);
-	// chassis.follow(path66e_txt, 15, 6000, false, false);
-	// catapultIntake.brake();
-
-	// chassis.moveToPoint(67, -20, 1000, false, 100);
-	// chassis.moveToPoint(64, -40, 1000, true);
-	// chassis.moveToPoint(64, -20, 700, false);
-
-	// chassis.moveToPoint(35, -36, 1500, true, 80);
-	// chassis.moveToPoint(12, -33, 1500, true);
-
-	// chassis.moveToPoint(16, -17, 1500, false);
-	// chassis.turnTo(49, -4, 1000, true);
-	// delay(1000);
-	// horizontalWings.set_value(true);
-	// chassis.moveToPoint(49, -4, 1500, true, 80);
-	// delay(600);
-	// horizontalWings.set_value(false);
-
-	// chassis.moveToPoint(16, -17, 1500, false);
-	// chassis.moveToPoint(16, 17, 1500, false);
-	// chassis.turnTo(49, -4, 1000, true);
-	// horizontalWings.set_value(true);
-	// chassis.moveToPoint(49, 5, 1500, true, 80);
-	// delay(600);
-	// horizontalWings.set_value(false);
-
-	// chassis.moveToPoint(16, 17, 1500, false);
-	// chassis.turnTo(49, -4, 1000, true);
-	// horizontalWings.set_value(true);
-	// chassis.moveToPoint(49, 0, 1500, true, 80);
-	// delay(1000);
-	// horizontalWings.set_value(false);
-
-	// chassis.moveToPoint(20, 17, 1500, false);
-	// chassis.turnTo(25, 25, 1000, false);
-
-	// chassis.follow(path95f_txt, 15, 4000, false, false);
-	// chassis.moveToPoint(65, 20, 1000, false, 80);
+	chassis.setPose(0, 0, 0);
+	chassis.moveToPoint(0, 3 * 24, 4000);
+	chassis.turnTo(0, 0, 4000);
+	chassis.moveToPoint(0, 0, 4000);
+	// chassis.moveToPose(0, 30, 180, 4000);
+	// chassis.moveToPose(0, 0, 0, 4000);
+	//  chassis.turnTo(0, 0, 4000);
 }
 
 /**
