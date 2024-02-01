@@ -14,7 +14,7 @@ MotorGroup catapult(
 	{Motor(-7, E_MOTOR_GEAR_200),
 	 Motor(8, E_MOTOR_GEAR_GREEN)});
 
-Motor intake(9, E_MOTOR_GEAR_200);
+Motor intake(19, E_MOTOR_GEAR_200);
 
 ADIDigitalOut verticalWings('C');
 ADIDigitalOut horizontalWings('B');
@@ -147,15 +147,56 @@ void competition_initialize() {}
  * from where it left off.
  */
 
+ASSET(path19_txt);
+ASSET(path82c_txt);
+
 void autonomous()
 {
-	chassis.setPose(0, 0, 0);
-	chassis.moveToPoint(0, 3 * 24, 4000);
-	chassis.turnTo(0, 0, 4000);
-	chassis.moveToPoint(0, 0, 4000);
-	// chassis.moveToPose(0, 30, 180, 4000);
-	// chassis.moveToPose(0, 0, 0, 4000);
-	//  chassis.turnTo(0, 0, 4000);
+	intake.move_voltage(12000);
+	delay(500);
+	intake.brake();
+
+	//6 ball thats def 5
+	chassis.setPose(-5, 58, 90);
+	chassis.moveToPoint(2, 58, 2000);
+	intake.move_voltage(-12000);
+	chassis.moveToPoint(-17, 57, 1200, false);
+	chassis.follow(path19_txt, 16, 600, false, true);
+	delay(700);
+	verticalWings.set_value(true);
+	chassis.moveToPoint(-52, 36, 600, false);
+	chassis.moveToPoint(-61, 19, 700, false);
+	delay(100);
+	verticalWings.set_value(false);
+
+	chassis.moveToPoint(-53, 37, 1000, true);
+	chassis.turnTo(-50, 20, 700, true);
+	delay(700);
+	intake.move_voltage(12000);
+	chassis.moveToPoint(-56.5, 17, 600, true);
+	
+	chassis.moveToPoint(-58, 45, 800, true);
+	chassis.turnTo(-9, 20.83, 1000);
+
+	intake.move_voltage(-12000);
+	
+	chassis.moveToPoint(-9, 20.83, 1500, true);
+	delay(100);
+	chassis.turnTo(-50, 2, 1500, true);
+	delay(500);
+	intake.move_voltage(12000);
+	delay(350);
+	intake.move_voltage(-12000);
+	chassis.moveToPoint(10, 2, 1500, true);
+	delay(100);
+	chassis.turnTo(-10, 2, 400, false);
+	chassis.moveToPoint(-5, 2, 500, false);
+	chassis.moveToPoint(10, 2, 1000, true);
+	chassis.turnTo(-50, 5, 1500, true);
+	delay(400);
+	horizontalWings.set_value(true);
+	chassis.moveToPoint(-50, 2, 800, true);
+	chassis.moveToPoint(-10, 2, 1000, false);
 }
 
 /**
