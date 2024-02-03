@@ -14,7 +14,7 @@ MotorGroup catapult(
 	{Motor(-7, E_MOTOR_GEAR_200),
 	 Motor(8, E_MOTOR_GEAR_GREEN)});
 
-Motor intake(9, E_MOTOR_GEAR_200);
+Motor intake(19, E_MOTOR_GEAR_200);
 
 ADIDigitalOut verticalWings('C');
 ADIDigitalOut horizontalWings('B');
@@ -150,12 +150,21 @@ void competition_initialize() {}
 void autonomous()
 {
 	chassis.setPose(0, 0, 0);
-	chassis.moveToPoint(0, 3 * 24, 4000);
-	chassis.turnTo(0, 0, 4000);
-	chassis.moveToPoint(0, 0, 4000);
-	// chassis.moveToPose(0, 30, 180, 4000);
-	// chassis.moveToPose(0, 0, 0, 4000);
-	//  chassis.turnTo(0, 0, 4000);
+	intake.move_voltage(12000);
+	pros::delay(300);
+	chassis.moveToPose(0, 10, 0, 800);
+	chassis.moveToPose(0, 10, 30, 800);
+	intake.move_voltage(12000);
+	pros::delay(500);
+	intake.move_voltage(0);
+	chassis.moveToPose(0, 10, 0, 800);
+	verticalWings.set_value(true);
+	pros::delay(500);
+	chassis.moveToPose(0, 5, 0, 800, {false});
+	chassis.turnTo(-30, 30, 800);
+	chassis.turnTo(20, -30, 800);
+	verticalWings.set_value(false);
+	chassis.moveToPoint(20, -30, 2000);
 }
 
 /**
