@@ -54,8 +54,7 @@ ADIMechanism horizontalWingsMechanism(&horizontalWings, DIGITAL_L1, DIGITAL_L2);
 ADIMechanism verticalWingsMechanism(&verticalWings, DIGITAL_L1, DIGITAL_L2);
 ADIMechanism hangMechanism(&hang, DIGITAL_UP, DIGITAL_DOWN);
 
-bool wingsToggle = true;
-
+bool wingsToggle = false;
 bool catapultToggle = false;
 
 int catapultDirection = 0;
@@ -69,7 +68,11 @@ void MechanismsTask(void *_)
 
         if (controller.get_digital(DIGITAL_RIGHT))
         {
-            wingsToggle = !wingsToggle;
+            wingsToggle = true;
+        }
+        else if (controller.get_digital(DIGITAL_UP))
+        {
+            wingsToggle = false;
         }
 
         if (wingsToggle)

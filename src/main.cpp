@@ -164,7 +164,7 @@ void autonomous()
 	chassis.turnTo(-30, 30, 800);
 	chassis.turnTo(20, -30, 800);
 	verticalWings.set_value(false);
-	chassis.moveToPoint(20, -30, 2000);
+	chassis.moveToPoint(16, -30, 2000);
 }
 
 /**
