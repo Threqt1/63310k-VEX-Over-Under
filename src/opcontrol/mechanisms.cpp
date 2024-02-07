@@ -51,7 +51,7 @@ void ADIMechanism::poll()
 
 MotorMechanism intakeMechanism(&intake, DIGITAL_R1, DIGITAL_R2);
 ADIMechanism horizontalWingsMechanism(&horizontalWings, DIGITAL_L1, DIGITAL_L2);
-ADIMechanism verticalWingsMechanism(&verticalWings, DIGITAL_L1, DIGITAL_L2);
+ADIMechanism verticalWingsMechanism(&verticalWings, DIGITAL_RIGHT, DIGITAL_LEFT);
 ADIMechanism hangMechanism(&hang, DIGITAL_UP, DIGITAL_DOWN);
 
 bool wingsToggle = true;
@@ -67,19 +67,8 @@ void MechanismsTask(void *_)
         intakeMechanism.poll();
         hangMechanism.poll();
 
-        if (controller.get_digital(DIGITAL_RIGHT))
-        {
-            wingsToggle = !wingsToggle;
-        }
-
-        if (wingsToggle)
-        {
             horizontalWingsMechanism.poll();
-        }
-        else
-        {
             verticalWingsMechanism.poll();
-        }
 
         if (controller.get_digital(DIGITAL_A))
         {

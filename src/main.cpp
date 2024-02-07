@@ -1,4 +1,10 @@
 #include "main.h"
+ASSET(path19_txt);
+ASSET(path82c_txt);
+ASSET(path63d_txt);
+ASSET(path6d_txt);
+ASSET(path95f_txt);
+
 
 // cata 7 (5.5) 8 (green) (a and b)
 // intake r1 r2 10 (5.5)
@@ -87,12 +93,6 @@ lemlib::OdomSensors odometrySensors(
 // Configure the lemlib chassis
 lemlib::Chassis chassis(drivetrain, linearMovementSettings, angularMovementSettings, odometrySensors);
 
-/**
- * Runs initialization code. This occurs as soon as the program is started.
- *
- * All other competition modes are blocked by initialize; it is recommended
- * to keep execution time for this mode under a few seconds.
- */
 void initialize()
 {
 	pros::lcd::initialize(); // initialize brain screen
@@ -101,59 +101,29 @@ void initialize()
 							 // leftSideMotors.set_voltage_limit(5000);
 							 // rightSideMotors.set_voltage_limit(5000);
 
+
 	// // thread to for brain screen and position logging
 	pros::Task screenTask([&]()
 						  {
-	    lemlib::Pose pose(0, 0, 0);
 	    while (true) {
 	        // print robot location to the brain screen
-	        pros::lcd::print(0, "X: %f", chassis.getPose().x); // x
-	        pros::lcd::print(1, "Y: %f", chassis.getPose().y); // y
-	        pros::lcd::print(2, "Theta: %f", chassis.getPose().theta); // heading
-	        // log position telemetry
-	        lemlib::telemetrySink()->info("Chassis pose: {}", chassis.getPose());
-	        // delay to save resources
-	        pros::delay(50);
+	        lemlib::Pose pose = chassis.getPose(); // get the current position of the robot
+			pros::lcd::print(0, "x: %f", pose.x); // print the x position
+			pros::lcd::print(1, "y: %f", pose.y); // print the y position
+			pros::lcd::print(2, "heading: %f", pose.theta); // print the heading
+			pros::delay(10);
 	    } });
 }
 
-/**
- * Runs while the robot is in the disabled state of Field Management System or
- * the VEX Competition Switch, following either autonomous or opcontrol. When
- * the robot is enabled, this task will exit.51
- */
 void disabled() {}
 
-/**
- * Runs after initialize(), and before autonomous when connected to the Field
- * Management System or the VEX Competition Switch. This is intended for
- * competition-specific initialization routines, such as an autonomous selector
- * on the LCD.
- *
- * This task will exit when the robot is enabled and autonomous or opcontrol
- * starts.
- */
 void competition_initialize() {}
-
-/**
- * Runs the user autonomous code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the autonomous
- * mode. Alternatively, this function may be called in initialize or opcontrol
- * for non-competition testing purposes.
- *
- * If the robot is disabled or communications is lost, the autonomous task
- * will be stopped. Re-enabling the robot will restart the task, not re-start it
- * from where it left off.
- */
-
-ASSET(path19_txt);
-ASSET(path82c_txt);
 
 void autonomous()
 {
+	// chassis.calibrate();
 	intake.move_voltage(12000);
-	delay(500);
+	delay(200);
 	intake.brake();
 
 	//6 ball thats def 5
@@ -162,56 +132,141 @@ void autonomous()
 	intake.move_voltage(-12000);
 	chassis.moveToPoint(-17, 57, 1200, false);
 	chassis.follow(path19_txt, 16, 600, false, true);
-	delay(700);
+	delay(500);
 	verticalWings.set_value(true);
-	chassis.moveToPoint(-52, 36, 600, false);
-	chassis.moveToPoint(-61, 19, 700, false);
-	delay(100);
+	chassis.moveToPoint(-55, 35, 600, false);
+	delay(400);
 	verticalWings.set_value(false);
+	chassis.moveToPoint(-63, 19, 700, false);
 
-	chassis.moveToPoint(-53, 37, 1000, true);
-	chassis.turnTo(-50, 20, 700, true);
-	delay(700);
+	chassis.moveToPoint(-56, 37, 700, true);
+	chassis.turnTo(-57, 20, 700, true);
+	delay(500);
 	intake.move_voltage(12000);
-	chassis.moveToPoint(-56.5, 17, 600, true);
+	chassis.moveToPoint(-62, 17, 600, true);
 	
 	chassis.moveToPoint(-58, 45, 800, true);
-	chassis.turnTo(-9, 20.83, 1000);
+	chassis.turnTo(-9, 20, 700);
 
 	intake.move_voltage(-12000);
 	
-	chassis.moveToPoint(-9, 20.83, 1500, true);
+	chassis.moveToPoint(-9, 20, 1500, true);
 	delay(100);
-	chassis.turnTo(-50, 2, 1500, true);
+	chassis.turnTo(-50, 0, 1500, true);
 	delay(500);
 	intake.move_voltage(12000);
 	delay(350);
 	intake.move_voltage(-12000);
 	chassis.moveToPoint(10, 2, 1500, true);
 	delay(100);
-	chassis.turnTo(-10, 2, 400, false);
-	chassis.moveToPoint(-5, 2, 500, false);
-	chassis.moveToPoint(10, 2, 1000, true);
-	chassis.turnTo(-50, 5, 1500, true);
+	chassis.turnTo(-50, 5, 700, true);
 	delay(400);
 	horizontalWings.set_value(true);
-	chassis.moveToPoint(-50, 2, 800, true);
+	chassis.moveToPoint(-50, 2, 1000, true);
 	chassis.moveToPoint(-10, 2, 1000, false);
+
+	//skills
+	// chassis.setPose(-35, -62, 90); 
+	// chassis.follow(path63d_txt, 11, 1200, false, false);
+	// chassis.moveToPoint(-61, -28, 500, false);
+	// chassis.turnTo(-50, -43, 700, true);
+	// chassis.moveToPoint(-50, -43, 1000, true);
+	// chassis.moveToPoint(-72, -69, 1000, false);
+	// chassis.turnTo(45, -25, 1000, true);
+	// chassis.moveToPoint(-73, -69, 50, false);
+	// chassis.turnTo(45, -25, 1000, true);
+	// catapult.move_voltage(-12000);
+	// delay(26000);
+
+	// chassis.moveToPoint(-55, -50, 1500, true);
+	// chassis.turnTo(-30, -70, 1300, false);
+
+	// catapult.move_voltage(-10000);
+	// chassis.follow(path6d_txt, 15, 4500, false, false);
+	// catapult.brake();
+
+	// chassis.moveToPoint(67, -20, 700, false);
+	// chassis.moveToPoint(66, -55, 1000, true);
+	// chassis.moveToPoint(66, -20, 700, false);
+
+	// chassis.moveToPoint(35, -36, 1500, true);
+	// chassis.moveToPoint(17, -29, 1500, true);
+
+	// chassis.moveToPoint(17, -17, 1500, false);
+	// chassis.turnTo(49, -4, 1000, true);
+	// delay(1000);
+	// horizontalWings.set_value(true);
+	// chassis.moveToPoint(49, -4, 1000, true);
+	// delay(700);
+	// horizontalWings.set_value(false);
+
+	// chassis.moveToPoint(18, -17, 1500, false);
+	// chassis.moveToPoint(18, 17, 1500, false);
+	// chassis.turnTo(49, -4, 1000, true);
+	// horizontalWings.set_value(true);
+	// chassis.moveToPoint(49, 5, 1500, true);
+	// delay(600);
+	// horizontalWings.set_value(false);
+
+	// chassis.moveToPoint(18, 17, 1500, false);
+	// chassis.turnTo(49, -4, 1000, true);
+	// horizontalWings.set_value(true);
+	// chassis.moveToPoint(49, 0, 1500, true);
+	// delay(1000);
+	// horizontalWings.set_value(false);
+
+
+	// chassis.moveToPoint(20, 17, 1500, false);
+	// chassis.turnTo(25, 25, 1000, false);
+
+	// chassis.follow(path95f_txt, 15, 4000, false, false);
+	// chassis.moveToPoint(65, 20, 1000, false);
+
+
+	//awp
+	// chassis.setPose(-38, -55, 0);
+	// intake.move_voltage(-12000);
+	// chassis.moveToPoint(-23, 2, 1000, true);
+	// delay(400);
+	// chassis.turnTo(-38, -55, 1000, true);
+	// delay(700);
+	// intake.move_voltage(12000);
+	// delay(700);
+	// intake.move_voltage(-12000);
+	// chassis.turnTo(-1, 0, 600, true);
+	// chassis.moveToPoint(-1, 0, 700, true);
+
+
+	// chassis.turnTo(-55, -57, 700, false); 
+	// chassis.moveToPoint(-49, -59, 2500, false);
+	// chassis.turnTo(-49, -100, 300, false);
+	// verticalWings.set_value(true);
+	// chassis.turnTo(45, 11, 600, false);
+	// chassis.turnTo(0, -70, 600, false);
+	// chassis.moveToPoint(0, -70, 1000, false);
+
+	//bad awp
+	// chassis.setPose(0, 0, 0);
+	// intake.move_voltage(12000);
+	// pros::delay(300);
+	// chassis.moveToPose(0, 10, 0, 800);
+	// chassis.moveToPose(0, 10, 30, 800);
+	// intake.move_voltage(12000);
+	// pros::delay(500);
+	// intake.move_voltage(0);
+	// chassis.moveToPose(0, 10, 0, 800);
+	// verticalWings.set_value(true);
+	// pros::delay(500);
+	// chassis.moveToPose(0, 5, 0, 800, {false});
+	// chassis.turnTo(-30, 30, 800);
+	// chassis.turnTo(20, -30, 800);
+	// verticalWings.set_value(false);
+	// intake.move_voltage(120000);
+	// chassis.moveToPoint(16, -37, 2000);
+	// pros::delay(2000);
+	// intake.move_voltage(0);
 }
 
-/**
- * Runs the operator control code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the operator
- * control mode.
- *
- * If no competition control is connected, this function will run immediately
- * following initialize().
- *
- * If the robot is disabled or communications is lost, the
- * operator control task will be stopped. Re-enabling the robot will restart the
- * task, not resume it from where it left off.
- */
 void opcontrol()
 {
 	pros::Task drivetrainTask(DrivetrainTask, (void *)"", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "drivetrain");
