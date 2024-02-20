@@ -149,22 +149,50 @@ void competition_initialize() {}
 
 void autonomous()
 {
-	chassis.setPose(0, 0, 0);
-	intake.move_voltage(12000);
-	pros::delay(300);
-	chassis.moveToPose(0, 10, 0, 800);
-	chassis.moveToPose(0, 10, 30, 800);
+	// chassis.setPose(0, 0, 0);
+	// intake.move_voltage(12000);
+	// pros::delay(300);
+	// chassis.moveToPose(0, 10, 0, 800);
+	// chassis.moveToPose(0, 10, 30, 800);
+	// intake.move_voltage(12000);
+	// pros::delay(500);
+	// intake.move_voltage(0);
+	// chassis.moveToPose(0, 10, 0, 800);
+	// verticalWings.set_value(true);
+	// pros::delay(500);
+	// chassis.moveToPose(0, 5, 0, 800, {false});
+	// chassis.turnTo(-30, 30, 800);
+	// chassis.turnTo(20, -30, 800);
+	// verticalWings.set_value(false);
+	// chassis.moveToPoint(16, -30, 2000);
+
 	intake.move_voltage(12000);
 	pros::delay(500);
-	intake.move_voltage(0);
-	chassis.moveToPose(0, 10, 0, 800);
-	verticalWings.set_value(true);
-	pros::delay(500);
-	chassis.moveToPose(0, 5, 0, 800, {false});
-	chassis.turnTo(-30, 30, 800);
-	chassis.turnTo(20, -30, 800);
-	verticalWings.set_value(false);
-	chassis.moveToPoint(16, -30, 2000);
+	intake.move_voltage(-12000);
+	chassis.setPose(-35.948, -54.849, 10);
+	chassis.moveToPoint(-25.504, -9.49, 2500);
+	chassis.moveToPoint(-35.948, -54.849, 2500, false);
+	chassis.moveToPose(-35.948, -54.849, 270, 1000);
+	chassis.moveToPoint(-45.768, -55.005, 1500);
+	chassis.moveToPose(-45.768, -55.005, 315, 1500);
+	chassis.moveToPoint(-54.341, -45.964, 1500);
+	chassis.moveToPoint(-45.612, -57.343, 1500, false);
+	// chassis.moveToPose(-53.405, -46.588, 325, 1000);
+	// chassis.moveToPoint(-48.885, -51.576, 1500);
+	// chassis.moveToPoint(-47.95, -52.511, 1500, false);
+	// chassis.waitUntilDone();
+	// verticalWings.set_value(true);
+	// chassis.moveToPose(-47.95, -52.511, 235, 1000);
+	// chassis.waitUntilDone();
+	// verticalWings.set_value(false);
+
+	// chassis.moveToPose(-24.413, -3.878, 210, 1000);
+	// chassis.moveToPoint(-44.053, -42.066, 2500);
+	//  chassis.moveToPose(-51.847, -51.576, 135, 2500);
+	//  chassis.moveToPoint(-42.65, -61.396, 1500);
+	//  chassis.moveToPose(-42.65, -61.396, 55, 1000);
+	//  chassis.moveToPose(-42.65, -61.396, 84, 1000);
+	//  chassis.moveToPoint(-5.552, -60.616, 1000);
 }
 
 /**
