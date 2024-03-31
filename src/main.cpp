@@ -14,11 +14,11 @@ MotorGroup intake({Motor(11, E_MOTOR_GEAR_200),
 				   Motor(-20, E_MOTOR_GEAR_200)});
 
 // a wings
-ADIDigitalOut wings('A');
+ADIDigitalOut verticalWings('A');
 // b pto
 ADIDigitalOut pto('B');
 // c hang
-ADIDigitalOut hang('C');
+ADIDigitalOut horizontalWings('C');
 
 // Drivetrain motors
 Motor leftMotor1(1);

@@ -5,10 +5,12 @@
 
 #pragma once
 extern Controller controller;
+extern MotorGroup leftSideMotors;
+extern MotorGroup rightSideMotors;
 extern lemlib::Chassis chassis;
 extern lemlib::Drivetrain drivetrain;
 
 extern MotorGroup intake;
-extern ADIDigitalOut wings;
+extern ADIDigitalOut verticalWings;
 extern ADIDigitalOut pto;
-extern ADIDigitalOut hang;
+extern ADIDigitalOut horizontalWings;

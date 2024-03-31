@@ -50,18 +50,48 @@ void ADIMechanism::poll()
 }
 
 MotorGroupMechanism intakeMechanism(&intake, DIGITAL_R1, DIGITAL_R2);
-ADIMechanism wingsMechanism(&wings, DIGITAL_L1, DIGITAL_L2);
+// ADIMechanism verticalWingsMechanism(&verticalWings, DIGITAL_L1, DIGITAL_L2);
 ADIMechanism ptoMechanism(&pto, DIGITAL_A, DIGITAL_B);
-ADIMechanism hangMechanism(&hang, DIGITAL_UP, DIGITAL_DOWN);
+// ADIMechanism horizontalWingsMechanism(&horizontalWings, DIGITAL_A, DIGITAL_B);
+
+bool horizontalToggle = false;
+bool verticalToggle = false;
+bool driveMotorsHoldToggle = false;
 
 void MechanismsTask(void *_)
 {
     while (true)
     {
         intakeMechanism.poll();
-        wingsMechanism.poll();
         ptoMechanism.poll();
-        hangMechanism.poll();
+        // horizontalWingsMechanism.poll();
+
+        if (controller.get_digital_new_press(DIGITAL_LEFT))
+        {
+            horizontalToggle = !horizontalToggle;
+            horizontalWings.set_value(horizontalToggle);
+        }
+
+        if (controller.get_digital_new_press(DIGITAL_Y))
+        {
+            verticalToggle = !verticalToggle;
+            verticalWings.set_value(verticalToggle);
+        }
+
+        if (controller.get_digital_new_press(DIGITAL_UP))
+        {
+            driveMotorsHoldToggle = !driveMotorsHoldToggle;
+            if (driveMotorsHoldToggle)
+            {
+                leftSideMotors.set_brake_modes(MOTOR_BRAKE_HOLD);
+                rightSideMotors.set_brake_modes(MOTOR_BRAKE_HOLD);
+            }
+            else
+            {
+                leftSideMotors.set_brake_modes(MOTOR_BRAKE_COAST);
+                rightSideMotors.set_brake_modes(MOTOR_BRAKE_COAST);
+            }
+        }
 
         pros::delay(20);
     }
