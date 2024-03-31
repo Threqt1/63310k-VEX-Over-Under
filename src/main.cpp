@@ -35,7 +35,7 @@ MotorGroup rightSideMotors({leftMotor1, leftMotor2, leftMotor3, leftMotor4});
 MotorGroup leftSideMotors({rightMotor1, rightMotor2, rightMotor3, rightMotor4});
 
 // Inertial sensor
-IMU inertial(12);
+IMU inertial(18);
 
 // Rotation sensor
 // pros::Rotation horiSensor(10);
@@ -45,9 +45,9 @@ IMU inertial(12);
 lemlib::Drivetrain drivetrain(
 	&leftSideMotors,			// left side motors
 	&rightSideMotors,			// right side motors
-	10.6,						// track width in inches
+	11,						// track width in inches
 	lemlib::Omniwheel::NEW_325, // wheel diameter
-	360,						// rpm
+	450,						// rpm
 	8							// chase power (probably for pure pursuit)
 );
 
@@ -119,6 +119,12 @@ void competition_initialize() {}
 void autonomous()
 {
 	// chassis.calibrate();
+	
+	chassis.setPose(36, 57, 180);
+
+	chassis.turnTo(-25, 5, 700, true);
+	chassis.moveToPoint(-25, 5, 2000, true);
+
 
 	// skills
 	//  chassis.setPose(-35, -62, 90);

@@ -35,15 +35,15 @@ typedef enum imu_status_e {
 } imu_status_e_t;
 
 typedef struct __attribute__((__packed__)) quaternion_s {
-	double x;
 	double y;
+	double x;
 	double z;
 	double w;
 } quaternion_s_t;
 
 struct imu_raw_s {
-	double x;
 	double y;
+	double x;
 	double z;
 };
 
