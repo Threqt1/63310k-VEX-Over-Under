@@ -49,67 +49,19 @@ void ADIMechanism::poll()
     }
 }
 
-MotorMechanism intakeMechanism(&intake, DIGITAL_R1, DIGITAL_R2);
-ADIMechanism horizontalWingsMechanism(&horizontalWings, DIGITAL_L1, DIGITAL_L2);
-ADIMechanism verticalWingsMechanism(&verticalWings, DIGITAL_RIGHT, DIGITAL_LEFT);
+MotorGroupMechanism intakeMechanism(&intake, DIGITAL_R1, DIGITAL_R2);
+ADIMechanism wingsMechanism(&wings, DIGITAL_L1, DIGITAL_L2);
+ADIMechanism ptoMechanism(&pto, DIGITAL_A, DIGITAL_B);
 ADIMechanism hangMechanism(&hang, DIGITAL_UP, DIGITAL_DOWN);
 
-bool wingsToggle = true;
-
-bool catapultToggle = false;
-
-int catapultDirection = 0;
-int catapultMaxVoltage = -12000;
 void MechanismsTask(void *_)
 {
     while (true)
     {
         intakeMechanism.poll();
+        wingsMechanism.poll();
+        ptoMechanism.poll();
         hangMechanism.poll();
-
-            horizontalWingsMechanism.poll();
-            verticalWingsMechanism.poll();
-
-        if (controller.get_digital(DIGITAL_A))
-        {
-            catapultToggle = true;
-        }
-
-        if (controller.get_digital(DIGITAL_B))
-        {
-            catapultToggle = false;
-        }
-
-        if (controller.get_digital(DIGITAL_X))
-        {
-            catapultToggle = false;
-            catapultDirection = 1;
-        }
-        else if (controller.get_digital(DIGITAL_Y))
-        {
-            catapultToggle = false;
-            catapultDirection = -1;
-        }
-        else
-        {
-            catapultDirection = 0;
-        }
-
-        if (catapultToggle)
-        {
-            catapult.move_voltage(catapultMaxVoltage);
-        }
-        else
-        {
-            if (catapultDirection != 0)
-            {
-                catapult.move_voltage(catapultMaxVoltage * catapultDirection);
-            }
-            else
-            {
-                catapult.brake();
-            }
-        }
 
         pros::delay(20);
     }
