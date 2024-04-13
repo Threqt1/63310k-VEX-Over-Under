@@ -55,7 +55,7 @@ lemlib::Drivetrain drivetrain(
 lemlib::ControllerSettings linearMovementSettings(
 	20,	 // P
 	0,	 // I
-	30,	 // D
+	40,	 // D
 	3,	 // antiwindup
 	1,	 // small error (use for tuning settling)
 	60,	 // small error timeout
@@ -117,14 +117,174 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous()
-{
+{	
+	leftSideMotors.set_brake_modes(MOTOR_BRAKE_HOLD);
+	rightSideMotors.set_brake_modes(MOTOR_BRAKE_HOLD);
+
+
+	// //left mid
+	// chassis.turnTo(-12, 27, 300, true);
+	// chassis.moveToPoint(-12, 27, 2000, true);
+
+	// //mid mid
+	// chassis.turnTo(-25, 9, 300, true);
+	// chassis.moveToPoint(-25, 9, 1000, true);
+
+	//top mid 
+	// chassis.turnTo(-2, 9, 300, true);
+	// chassis.moveToPoint(-2, 9, 1000, true);
+
+
 	// chassis.calibrate();
+	intake.move_voltage(12000);
+	delay(200);
+	// intake.brake();
+
+	//new awp
+	intake.move_voltage(-12000);
+	chassis.setPose(-33, -54, 0);
+	chassis.moveToPoint(-26, -8, 2000, true);
+	intake.move_voltage(-12000);
+	delay(1100);
+	intake.brake();
+	chassis.moveToPoint(-26, -20, 2000, false);
+
+	chassis.turnTo(-47, -63, 1000, true);
+	chassis.moveToPoint(-47, -63, 2000, true);
+
+	chassis.turnTo(-36, -74, 1000, true);
+	delay(1000);
+	verticalWings.set_value(true);
+	delay(500);
+	chassis.turnTo(-10, -47, 500, true);
+	chassis.turnTo(-42, -35, 500, true);
+	delay(500);
+	verticalWings.set_value(false);
+
+	chassis.turnTo(-17, -66, 1000, true);
+	intake.move_voltage(12000);
+	delay(400);
+	horizontalWings.set_value(true);
+	chassis.moveToPoint(-17, -66, 1500, true);
+	delay(700);
+	horizontalWings.set_value(false);
+	chassis.turnTo(-7, -60, 1000, true);
+	chassis.moveToPoint(-7, -60, 1000, true);
+	delay(2000);
+	intake.brake();
 	
-	chassis.setPose(36, 57, 180);
 
-	chassis.turnTo(-25, 5, 700, true);
-	chassis.moveToPoint(-25, 5, 2000, true);
 
+	//6 ball thats def 5
+	// chassis.setPose(-5, 58, 90);
+	// chassis.moveToPoint(2, 58, 2000);
+	// intake.move_voltage(-12000);
+	// chassis.moveToPoint(-17, 57, 700, false);
+	// intake.brake();
+	// chassis.moveToPoint(-38, 50, 800, false);
+	// chassis.moveToPoint(-41, 45, 700, false);
+	// delay(400);
+	// horizontalWings.set_value(true);
+	// chassis.turnTo(-10, 0, 800, false, 50);
+	// chassis.turnTo(-52, 43, 700, false);
+	// horizontalWings.set_value(false);
+	// chassis.moveToPoint(-54, 43, 700, false);
+	// chassis.moveToPoint(-54, 20, 700, false);
+	// chassis.moveToPoint(-58, 35, 700, true);
+	// chassis.moveToPoint(-58, 20, 700, false);
+
+	// chassis.moveToPoint(-58, 34, 700, true);
+	// chassis.turnTo(-53, 20, 700, true);
+	// chassis.turnTo(-56, 20, 400, true);
+	// intake.move_voltage(12000);
+	// delay(200);
+	// chassis.moveToPoint(-56, 20, 600, true);
+
+	// intake.move_voltage(-12000);
+	// chassis.moveToPoint(-47, 39, 1000, false);
+
+	// chassis.turnTo(-9, 24, 300, true);
+	// chassis.moveToPoint(-9, 24, 2000, true);
+	// delay(1100);
+	// intake.brake();
+	// chassis.turnTo(-47, -2, 1000, true);
+	// delay(300);
+	// intake.move_voltage(12000);
+	// delay(1100);
+
+	// intake.move_voltage(-12000);
+	// chassis.turnTo(10, -1, 700, true);
+	// chassis.moveToPoint(10, -1, 1000, true);
+	// delay(1250);
+	
+	// intake.brake();
+	// chassis.turnTo(-47, -9, 1000, true);
+	// delay(500);
+	// horizontalWings.set_value(true);
+	// delay(200);
+	// intake.move_voltage(12000);
+	// chassis.moveToPoint(-47, -9, 800, true);
+	// chassis.moveToPoint(0, -9, 1000, false);
+
+
+
+
+
+
+
+
+	//old fail
+	// verticalWings.set_value(true);
+	// intake.move_voltage(12000);
+	// delay(200);
+	// verticalWings.set_value(false);
+	// intake.brake();
+
+	// intake.move_voltage(-12000);
+	// chassis.turnTo(-25, 9, 300, true);
+	// chassis.moveToPoint(-25, 9, 1000, true);
+	// delay(100);
+
+	// chassis.turnTo(-36, 55, 800, false);
+	// chassis.moveToPoint(-36, 55, 1000, false);
+
+	// chassis.turnTo(-58, 25, 500, true);
+	// intake.move_voltage(12000);
+	// delay(900);
+	// intake.move_voltage(-12000);
+
+	// chassis.turnTo(-4, 59, 800, true);
+	// chassis.moveToPoint(-4, 59, 1700, true);
+	// delay(100);
+
+	// chassis.turnTo(-36, 55, 800, false);
+	// chassis.moveToPoint(-36, 55, 1400, false);
+
+	// chassis.moveToPoint(-50, 53, 1500, false);
+	// // chassis.moveToPoint(-55, 40, 1000, false);
+	// chassis.moveToPoint(-60, 28, 1500, false);
+
+	// chassis.moveToPoint(-57, 40, 1000, true);
+	// intake.brake();
+	// chassis.moveToPoint(-36, 55, 1200, true);
+
+	// chassis.turnTo(-50, 53, 700, true);
+	// intake.move_voltage(-12000);
+	// chassis.moveToPoint(-50, 53, 1000, true);
+	// chassis.moveToPoint(-60, 47, 700, true);
+	// verticalWings.set_value(true);
+	// chassis.moveToPoint(-62, 46, 800, true);
+	// chassis.moveToPoint(-62, 44, 800, true);
+	// chassis.turnTo(28, -8, 800, true);
+	// verticalWings.set_value(false);
+	// intake.move_voltage(12000);
+	// chassis.turnTo(-63, 25, 700, true);
+	// chassis.moveToPoint(-63, 25, 900, true);
+
+	// chassis.moveToPoint(-60, 28, 1000, false);
+	// chassis.moveToPoint(-50, 43, 1000, false);
+	// intake.move_voltage(-12000);
+	
 
 	// skills
 	//  chassis.setPose(-35, -62, 90);
@@ -227,6 +387,10 @@ void autonomous()
 
 void opcontrol()
 {
+
+	leftSideMotors.set_brake_modes(MOTOR_BRAKE_COAST);
+	rightSideMotors.set_brake_modes(MOTOR_BRAKE_COAST);
+
 	pros::Task drivetrainTask(DrivetrainTask, (void *)"", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "drivetrain");
 
 	pros::Task mechanismsTask(MechanismsTask, (void *)"", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "mechanisms");
