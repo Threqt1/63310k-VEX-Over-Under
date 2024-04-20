@@ -10,29 +10,25 @@
 // Controller link
 Controller controller(E_CONTROLLER_MASTER);
 
-MotorGroup intake({Motor(11, E_MOTOR_GEAR_200),
-				   Motor(-20, E_MOTOR_GEAR_200)});
+MotorGroup intake({Motor(12, E_MOTOR_GEAR_200),
+				   Motor(-18, E_MOTOR_GEAR_200)});
 
 // a wings
 ADIDigitalOut verticalWings('A');
-// b pto
-ADIDigitalOut pto('B');
 // c hang
 ADIDigitalOut horizontalWings('C');
 
 // Drivetrain motors
 Motor leftMotor1(1);
 Motor leftMotor2(2);
-Motor leftMotor3(3);
-Motor leftMotor4(-7);
+Motor leftMotor3(8);
 Motor rightMotor1(-4);
 Motor rightMotor2(-5);
 Motor rightMotor3(-6);
-Motor rightMotor4(8);
 
 // Drivetrain motor groups
-MotorGroup rightSideMotors({leftMotor1, leftMotor2, leftMotor3, leftMotor4});
-MotorGroup leftSideMotors({rightMotor1, rightMotor2, rightMotor3, rightMotor4});
+MotorGroup rightSideMotors({leftMotor1, leftMotor2, leftMotor3});
+MotorGroup leftSideMotors({rightMotor1, rightMotor2, rightMotor3});
 
 // Inertial sensor
 IMU inertial(18);
@@ -45,7 +41,7 @@ IMU inertial(18);
 lemlib::Drivetrain drivetrain(
 	&leftSideMotors,			// left side motors
 	&rightSideMotors,			// right side motors
-	11,						// track width in inches
+	11,							// track width in inches
 	lemlib::Omniwheel::NEW_325, // wheel diameter
 	450,						// rpm
 	8							// chase power (probably for pure pursuit)
@@ -117,10 +113,9 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous()
-{	
+{
 	leftSideMotors.set_brake_modes(MOTOR_BRAKE_HOLD);
 	rightSideMotors.set_brake_modes(MOTOR_BRAKE_HOLD);
-
 
 	// //left mid
 	// chassis.turnTo(-12, 27, 300, true);
@@ -130,17 +125,16 @@ void autonomous()
 	// chassis.turnTo(-25, 9, 300, true);
 	// chassis.moveToPoint(-25, 9, 1000, true);
 
-	//top mid 
-	// chassis.turnTo(-2, 9, 300, true);
-	// chassis.moveToPoint(-2, 9, 1000, true);
-
+	// top mid
+	//  chassis.turnTo(-2, 9, 300, true);
+	//  chassis.moveToPoint(-2, 9, 1000, true);
 
 	// chassis.calibrate();
 	intake.move_voltage(12000);
 	delay(200);
 	// intake.brake();
 
-	//new awp
+	// new awp
 	intake.move_voltage(-12000);
 	chassis.setPose(-33, -54, 0);
 	chassis.moveToPoint(-26, -8, 2000, true);
@@ -172,26 +166,24 @@ void autonomous()
 	chassis.moveToPoint(-7, -60, 1000, true);
 	delay(2000);
 	intake.brake();
-	
 
-
-	//6 ball thats def 5
-	// chassis.setPose(-5, 58, 90);
-	// chassis.moveToPoint(2, 58, 2000);
-	// intake.move_voltage(-12000);
-	// chassis.moveToPoint(-17, 57, 700, false);
-	// intake.brake();
-	// chassis.moveToPoint(-38, 50, 800, false);
-	// chassis.moveToPoint(-41, 45, 700, false);
-	// delay(400);
-	// horizontalWings.set_value(true);
-	// chassis.turnTo(-10, 0, 800, false, 50);
-	// chassis.turnTo(-52, 43, 700, false);
-	// horizontalWings.set_value(false);
-	// chassis.moveToPoint(-54, 43, 700, false);
-	// chassis.moveToPoint(-54, 20, 700, false);
-	// chassis.moveToPoint(-58, 35, 700, true);
-	// chassis.moveToPoint(-58, 20, 700, false);
+	// 6 ball thats def 5
+	//  chassis.setPose(-5, 58, 90);
+	//  chassis.moveToPoint(2, 58, 2000);
+	//  intake.move_voltage(-12000);
+	//  chassis.moveToPoint(-17, 57, 700, false);
+	//  intake.brake();
+	//  chassis.moveToPoint(-38, 50, 800, false);
+	//  chassis.moveToPoint(-41, 45, 700, false);
+	//  delay(400);
+	//  horizontalWings.set_value(true);
+	//  chassis.turnTo(-10, 0, 800, false, 50);
+	//  chassis.turnTo(-52, 43, 700, false);
+	//  horizontalWings.set_value(false);
+	//  chassis.moveToPoint(-54, 43, 700, false);
+	//  chassis.moveToPoint(-54, 20, 700, false);
+	//  chassis.moveToPoint(-58, 35, 700, true);
+	//  chassis.moveToPoint(-58, 20, 700, false);
 
 	// chassis.moveToPoint(-58, 34, 700, true);
 	// chassis.turnTo(-53, 20, 700, true);
@@ -216,7 +208,7 @@ void autonomous()
 	// chassis.turnTo(10, -1, 700, true);
 	// chassis.moveToPoint(10, -1, 1000, true);
 	// delay(1250);
-	
+
 	// intake.brake();
 	// chassis.turnTo(-47, -9, 1000, true);
 	// delay(500);
@@ -226,19 +218,12 @@ void autonomous()
 	// chassis.moveToPoint(-47, -9, 800, true);
 	// chassis.moveToPoint(0, -9, 1000, false);
 
-
-
-
-
-
-
-
-	//old fail
-	// verticalWings.set_value(true);
-	// intake.move_voltage(12000);
-	// delay(200);
-	// verticalWings.set_value(false);
-	// intake.brake();
+	// old fail
+	//  verticalWings.set_value(true);
+	//  intake.move_voltage(12000);
+	//  delay(200);
+	//  verticalWings.set_value(false);
+	//  intake.brake();
 
 	// intake.move_voltage(-12000);
 	// chassis.turnTo(-25, 9, 300, true);
@@ -284,7 +269,6 @@ void autonomous()
 	// chassis.moveToPoint(-60, 28, 1000, false);
 	// chassis.moveToPoint(-50, 43, 1000, false);
 	// intake.move_voltage(-12000);
-	
 
 	// skills
 	//  chassis.setPose(-35, -62, 90);

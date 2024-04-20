@@ -12,5 +12,4 @@ extern lemlib::Drivetrain drivetrain;
 
 extern MotorGroup intake;
 extern ADIDigitalOut verticalWings;
-extern ADIDigitalOut pto;
 extern ADIDigitalOut horizontalWings;

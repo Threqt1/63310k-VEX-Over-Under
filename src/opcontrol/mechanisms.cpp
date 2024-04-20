@@ -50,13 +50,9 @@ void ADIMechanism::poll()
 }
 
 MotorGroupMechanism intakeMechanism(&intake, DIGITAL_R1, DIGITAL_R2);
-// ADIMechanism verticalWingsMechanism(&verticalWings, DIGITAL_L1, DIGITAL_L2);
-// ADIMechanism ptoMechanism(&pto, DIGITAL_A, DIGITAL_B);
-// ADIMechanism horizontalWingsMechanism(&horizontalWings, DIGITAL_A, DIGITAL_B);
 
 bool horizontalToggle = false;
 bool verticalToggle = false;
-bool ptoToggle = false;
 bool driveMotorsHoldToggle = false;
 
 void MechanismsTask(void *_)
@@ -64,14 +60,6 @@ void MechanismsTask(void *_)
     while (true)
     {
         intakeMechanism.poll();
-        // ptoMechanism.poll();
-        // horizontalWingsMechanism.poll()
-        
-        if (controller.get_digital_new_press(DIGITAL_A))
-        {
-            ptoToggle = !ptoToggle;
-            pto.set_value(ptoToggle);
-        }
 
         if (controller.get_digital_new_press(DIGITAL_RIGHT))
         {
